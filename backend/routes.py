@@ -55,3 +55,6 @@ def create_profile():
         return jsonify({"error": "Failed to create profile", "details":str(e)}), 500
     
     return jsonify({"message": "Profile created successfully"}), 201
+
+
+# Delete a profile
