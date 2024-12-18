@@ -1,4 +1,5 @@
 from flask import request, jsonify
+from sqlalchemy.exc import IntegrityError  # for error handling
 from app import app, db
 from models import Profile
 
@@ -16,9 +17,10 @@ def get_profiles():
 def create_profile():
     data = request.json
 
+    # Extract required fields
     name = data.get("name")
     role = data.get("role")
-    description= data.get("description")
+    description= data.get("description", "")  # defaults to an empty string
     gender = data.get("gender")
 
     # Fetch avatar image based on gender
@@ -29,8 +31,8 @@ def create_profile():
     else:
         img_url = None
     
-    social_links = data.get("social_links", [])
-    categories = data.get("categories", [])
+    social_links = data.get("social_links", [])  # defaults to an empty list
+    categories = data.get("categories", [])  # defaults to an empty list
 
     # Validation: muat enter these fields
     required_fields = ["name", "role", "gender"]
@@ -38,13 +40,18 @@ def create_profile():
         if field not in data:
             return jsonify({"error": f'Missing required field: {field}'}), 400
     
+    # creating a new profile instance
     new_profile = Profile(name=name, role=role, description=description, gender=gender, img_url=img_url, social_links=social_links, categories=categories)
 
+    #  saving to database with error handling
     try:
         db.session.add(new_profile)
         db.session.commit()
+    except IntegrityError:   # error handling for unique social link
+        db.session.rollback()
+        return jsonify({"error": "The provided social link already exists. Please use a unique social link"}), 400
     except Exception as e:
         db.session.rollback()
-        return jsonify({"message": str(e)}), 400
+        return jsonify({"error": "Failed to create profile", "details":str(e)}), 500
     
     return jsonify({"message": "Profile created successfully"}), 201
