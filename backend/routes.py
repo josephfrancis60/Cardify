@@ -57,4 +57,44 @@ def create_profile():
     return jsonify({"message": "Profile created successfully"}), 201
 
 
+# Update a profile
+@app.route("/profiles/<int:id>", methods=["PATCH"])
+def update_profile(id):
+    try:
+        profile = Profile.query.get(id)
+        if profile is None:
+            return jsonify({"error": "Friend not found"}), 400
+        
+        data = request.json
+        profile.name = data.get("name", profile.name)
+        profile.role = data.get("role", profile.role)
+        profile.description = data.get("description", profile.description)
+        profile.gender = data.get("gender", profile.gender)
+        profile.social_links = data.get("social_links", profile.social_links)
+        profile.categories = data.get("categories", profile.categories)
+
+        db.session.commit()
+        return jsonify({"message": "Profile updated successfully"}), 200     # return jsonify(profile.to_json()), 200
+    
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error":str(e)}), 500
+
+
 # Delete a profile
+@app.route("/profiles/<int:id>", methods=["DELETE"])
+def delete_profile(id):
+    try:
+        profile = Profile.query.get(id)
+        if not profile:
+            return jsonify({"error": "Profile not found"}), 404
+        
+        db.session.delete(profile)
+        db.session.commit()
+        return jsonify({"message": "Profile deleted"}), 200
+    
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error":str(e)}), 500
+    
+#
