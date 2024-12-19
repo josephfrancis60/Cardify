@@ -4,15 +4,15 @@ from app import app, db
 from models import Profile
 
 
-# Get all profiles
+# 1. Get all profiles
 @app.route("/profiles", methods=["GET"])
 def get_profiles():
     profiles = Profile.query.all()
     result = [profile.to_json() for profile in profiles]
-    return jsonify({"profiles": result}), 200   # response status code:200 
+    return jsonify(result), 200   # response status code:200 
 
 
-# Create a profile
+# 2. Create a profile
 @app.route("/profiles", methods=["POST"])
 def create_profile():
     data = request.json
@@ -57,7 +57,7 @@ def create_profile():
     return jsonify({"message": "Profile created successfully"}), 201
 
 
-# Update a profile
+# 3. Update a profile
 @app.route("/profiles/<int:id>", methods=["PATCH"])
 def update_profile(id):
     try:
@@ -81,7 +81,7 @@ def update_profile(id):
         return jsonify({"error":str(e)}), 500
 
 
-# Delete a profile
+# 4. Delete a profile
 @app.route("/profiles/<int:id>", methods=["DELETE"])
 def delete_profile(id):
     try:
@@ -98,7 +98,7 @@ def delete_profile(id):
         return jsonify({"error":str(e)}), 500
     
 
-# Filter profiles bt category
+# 5. Filter profiles bt category
 @app.route("/profiles/category/<string:category>", methods=["GET"])
 def filter_profiles_by_category(category):
     try:
@@ -126,4 +126,47 @@ def filter_profiles_by_category(category):
         return jsonify({"error":str(e)}), 500
     
 
-# Search
+# 6. Filter profiles based on Searching name or role
+@app.route("/profiles/search", methods=["GET"])
+def search_profiles():
+    try:
+        # Get search parameter from the query string
+        search_query = request.args.get("search", "").strip().lower()
+        category_query = request.args.get("category", "all").strip().lower()
+
+        # validate for empty search query
+        if not search_query:
+            return jsonify({"error": "Search query is empty"}), 400
+        
+        # Fetch all profiles or filter by category if specified
+        if category_query == "all":
+            profiles = Profile.query.all()
+        else:
+            profiles = [profile for profile in Profile.query.all()
+                        if category_query in (cat.lower() for cat in profile.categories)]
+            
+        # Filter profiles based on search query (name / role)
+        filtered_profiles = []
+        for profile in profiles:
+            # Partial match for name and role
+            name_match = search_query in profile.name.lower()  # search query as substring in name
+            role_match = search_query in profile.role.lower()  # search query as substring in role
+
+            # if the search term matches eighter name or role, add to filtered_profiles
+            if name_match or role_match:
+                filtered_profiles.append(profile)
+        
+        # Validation: check if profiles are found
+        if not filtered_profiles:
+            return jsonify({"message": "No profiles found"}), 404
+        
+        # serialize the profile
+        profiles_list = [profile.to_json() for profile in filtered_profiles]
+        return jsonify(profiles_list), 200
+    
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error":str(e)}), 500
+    
+
+#
