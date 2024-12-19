@@ -97,4 +97,33 @@ def delete_profile(id):
         db.session.rollback()
         return jsonify({"error":str(e)}), 500
     
-#
+
+# Filter profiles bt category
+@app.route("/profiles/category/<string:category>", methods=["GET"])
+def filter_profiles_by_category(category):
+    try:
+        # normalize the category input to lowercase
+        category = category.lower()
+
+        # fetch all profiles if category is "all"
+        if category == "all":
+            profiles = Profile.query.all()
+        else:
+            # fetch profiles where the category exists in PickleType field
+            profiles = [profile for profile in Profile.query.all()
+                        if category in (cat.lower() for cat in profile.categories)]
+        
+        # check if profiles found
+        if not profiles:
+            return jsonify({"message": "No profiles found for this category"}), 404
+        
+        # serialize the profiles
+        profiles_list = [profile.to_json() for profile in profiles]
+        return jsonify(profiles_list), 200
+    
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error":str(e)}), 500
+    
+
+# Search
