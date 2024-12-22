@@ -1,14 +1,14 @@
-// import './App.css'
-import { Button } from '@mui/material';
-import Sidebar from './components/Sidebar';
+import { Container } from '@mui/material';
+import Siderbar from './components/Siderbar';
 
 
 function App() {
 
   return (
     <>
-      <Sidebar />
-    
+      <Container>
+        <Siderbar />
+      </Container>
     </>
   )
 }
