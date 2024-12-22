@@ -1,39 +1,67 @@
-# Python
-*.pyc
+# Byte-compiled / optimized / DLL files
+_pycache_/
+*.py[cod]
 *.pyo
 *.pyd
-pycache/
-*.env
-*.venv/
+
+# Virtual environment
 venv/
-env/
+.env/
 
-# Flask
+# Flask-related files
 instance/
-*.db
 *.sqlite3
+*.db
 
-# Node/React
+# Flask logs
+*.log
+*.pid
+
+# Flask cache and debug
+*.pyc
+*.pyo
+_pycache_/
+*.egg-info/
+*.eggs/
+
+# Vite (React frontend) build output
+dist/
+
+# Node.js modules
 node_modules/
+
+# Vite environment files
+.env.local
+.env.development
+.env.production
+.env.test
+
+# Temporary files and logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.env.local
-.env.development
-.env.test
-.env.production
-
-# Logs
-logs/
+pnpm-debug.log*
 *.log
 
-# IDE/Editor files
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-# System files
+# OS-specific files
 .DS_Store
 Thumbs.db
+desktop.ini
+
+# IDE-specific files
+.vscode/
+.idea/
+*.iml
+
+# Coverage reports
+coverage/
+*.coverage
+.nyc_output/
+coverage-final.json
+*.lcov
+
+# Material UI specific files (if custom themes were compiled)
+*.scssc
+*.sassc
+*.css.map
+*.scss.map
