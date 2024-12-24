@@ -8,7 +8,7 @@ function App() {
     <>
       <Box sx={{backgroundColor: '#000'}}>
         <Navbar /> 
-        hello
+        
       </Box>
   
       
