@@ -1,92 +1,86 @@
-import React from "react";  
-import { Box, Button, Typography } from "@mui/material";  
-import AddIcon from "@mui/icons-material/Add";  
-import WorkIcon from "@mui/icons-material/Work";  
-import PersonIcon from "@mui/icons-material/Person";  
-import BusinessIcon from "@mui/icons-material/Business";  
-import PeopleIcon from "@mui/icons-material/People";  
-import AllInclusiveIcon from "@mui/icons-material/AllInclusive";  
+import React, { useState } from "react";
+import { Box, Button, Typography } from "@mui/material";
+import WorkIcon from "@mui/icons-material/Work";
+import PersonIcon from "@mui/icons-material/Person";
+import BusinessIcon from "@mui/icons-material/Business";
+import PeopleIcon from "@mui/icons-material/People";
+import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
+import CreateProfileModal from "./CreateProfileModal";
 
-const categories = [  
-  { label: "All", icon: <AllInclusiveIcon /> },  
-  { label: "Work", icon: <WorkIcon /> },  
-  { label: "Personal", icon: <PersonIcon /> },  
-  { label: "Business", icon: <BusinessIcon /> },  
-  { label: "Friends", icon: <PeopleIcon /> },  
-];  
+const categories = [
+  { label: "All", icon: <AllInclusiveIcon /> },
+  { label: "Work", icon: <WorkIcon /> },
+  { label: "Personal", icon: <PersonIcon /> },
+  { label: "Business", icon: <BusinessIcon /> },
+  { label: "Friends", icon: <PeopleIcon /> },
+];
 
-const Sidebar = () => {  
-  return (  
-    <Box  
-      sx={{  
-        display: "flex",  
-        flexDirection: "column",  
-        justifyContent: "space-between",  
-        height: "100%",  
-      }}  
-    >  
-      {/* Top Section with "Create" Button */}  
-      <Box>  
-        <Button  
-          variant="contained"  
-          size="medium"  
-          startIcon={<AddIcon />}  
-          sx={{  
-            width: "70%",  
-            marginY: "50px",  
-            backgroundColor: "#1976d2",  
-            "&:hover": { backgroundColor: "#115293" },  
-          }}  
-        >  
-          Create  
-        </Button>  
+const Sidebar = () => {
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
-        {/* Category Navigation Buttons */}  
-        {categories.map((category, index) => (  
-          <Button  
-            key={index}  
-            variant="outlined"  
-            size="small"  
-            sx={{  
-              width: "100%",  
-              marginBottom: "10px",  
-              color: "#fff",  
-              borderColor: "#fff",  
-              "&:hover": {  
-                backgroundColor: "#333",  
-                borderColor: "#fff",  
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        height: "100%",
+        bgcolor: "#121212", // Optional: Dark theme
+      }}
+    >
+      {/* Top Section with "Create" Button */}
+      <Box>
+        {/* file for create profile button */}
+        <CreateProfileModal />
+
+        {/* Category Navigation Buttons */}
+        {categories.map((category, index) => (
+          <Button
+            key={index}
+            onClick={() => setSelectedCategory(category.label)}
+            variant="outlined"
+            size="small"
+            sx={{
+              width: "100%",
+              marginBottom: "10px",
+              color: "#fff", // Button text remains white
+              backgroundColor:
+                selectedCategory === category.label ? "#333" : "transparent", // Background for selected button
+              borderColor:
+                selectedCategory === category.label ? "#fff" : "transparent", // Borderline for selected button
+              "&:hover": {
+                backgroundColor: selectedCategory === category.label ? "#444" : "#222",
               },
               justifyContent: "flex-start",
               paddingLeft: "20px",
-                
-            }}  
-          > 
-            <span style={{
+            }}
+          >
+            <span
+              style={{
                 marginRight: "15px",
-                color: "red",
-            }}>
+                color: selectedCategory === category.label ? "#fff" : "#ff0000", // Icon color changes dynamically
+              }}
+            >
               {category.icon}
-            </span> 
-            <span>
-              {category.label}
-            </span>  
-          </Button>  
-        ))}  
-      </Box>  
+            </span>
+            {category.label}
+          </Button>
+        ))}
+      </Box>
 
-      {/* Bottom Section with Tagline */}  
-      <Typography  
-        variant="caption"  
-        align="center"  
-        sx={{  
-          color: "#bbb",  
-          marginTop: "20px",  
-        }}  
-      >  
-        Your Project Tagline Goes Here  
-      </Typography>  
-    </Box>  
-  );  
-};  
+      {/* Bottom Section with Tagline */}
+      <Typography
+        variant="caption"
+        align="center"
+        sx={{
+          color: "#bbb",
+          marginTop: "30px",
+        }}
+      >
+        Your Project Tagline Goes Here
+      </Typography>
+    </Box>
+  );
+};
 
 export default Sidebar;
