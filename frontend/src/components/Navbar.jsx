@@ -16,8 +16,14 @@ const Navbar = () => {
       }}
     >
       {/* Project Name */}
-      <Typography variant="h4" sx={{ color: "#fff" }}>
-        Cardify
+      <Typography
+        variant="h6"
+        sx={{
+          color: "#fff",
+          cursor: "pointer",
+        }}
+      >
+        Project Name
       </Typography>
 
       {/* Search Box */}

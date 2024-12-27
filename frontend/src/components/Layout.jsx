@@ -32,7 +32,8 @@ const Layout = ({ navbarContent, sidebarContent, mainContent }) => {
         {/* Sidebar Section */}
         <Box
           sx={{
-            width: "250px", // Width of the sidebar
+            width: { xs:'70px', sm:'200px', md:'250px', lg:'300px' }, // Responsive Width of the sidebar
+            transition: "all 0.3s ease-in-out",  // transistion for responsiveness
             borderRight: "2px solid #fff", // Line on the right of the sidebar
             padding: "20px",
           }}
