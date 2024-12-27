@@ -1,16 +1,52 @@
-import React from 'react'
-import { Paper, IconButton, InputBase } from '@mui/material'
-import { Search } from '@mui/icons-material'
+import React from "react";
+import { TextField, InputAdornment, IconButton } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 
 const Searchbar = () => {
   return (
-    <Paper component="form" sx={{borderRadius: 20, border: '1px solid rgba(227, 221, 221, 0.3)', pl: 1, boxShadow: 'none', mr: { sm: 5 }, backgroundColor: "#10141f"}}>
-        <InputBase className='search-bar' placeholder='Search for name or role...' value="" onChange={() => {}} sx={{ml: 1, color: "whitesmoke", border: "none", width: 300, pt: "4px",}} />
-        <IconButton type='submit' sx={{p: '8px', color: 'red'}}>
-            <Search />
-        </IconButton>
-    </Paper>
-  )
-}
+    <TextField
+      placeholder="Search for Name or Role..."
+      variant="outlined"
+      size="small"
+      sx={{
+        backgroundColor: "#fff",
+        borderRadius: "20px",
+        height: "35px", // Custom height
+        width: "100%",
+        "& .MuiOutlinedInput-root": {
+          height: "35px", // Ensure input field matches custom height
+          padding: "0", // Removes extra padding
+          borderRadius: "20px", // Ensure rounded corners
+        },
+        "& .MuiInputBase-input": {
+          padding: "8px 16px", // Adjust padding inside the field
+        },
+        "& .MuiOutlinedInput-notchedOutline": {
+          borderColor: "transparent", // Remove border by default
+        },
+        "&:hover .MuiOutlinedInput-notchedOutline": {
+          borderColor: "transparent", // Remove border on hover
+        },
+        "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+          borderColor: "transparent", // Remove border when focused
+        },
+        "& .MuiOutlinedInput-root.Mui-focused": {
+          boxShadow: "none", // Remove the blue shadow on focus
+        },
+      }}
+      slotProps={{
+        input: {
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton sx={{color: 'red'}}>
+                <SearchIcon />
+              </IconButton>
+            </InputAdornment>
+          ),
+        },
+      }}
+    />
+  );
+};
 
-export default Searchbar
+export default Searchbar;
