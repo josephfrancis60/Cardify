@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 
 const Layout = ({ navbarContent, sidebarContent, mainContent }) => {
   return (
-    // capturing the entire webpage in a box 
+    // Capturing the entire webpage in a box
     <Box
       sx={{
         width: "100vw",
@@ -22,20 +22,36 @@ const Layout = ({ navbarContent, sidebarContent, mainContent }) => {
           borderBottom: "2px solid #fff", // Line below the navbar
           padding: "10px",
           display: "flex",
+          position: "fixed", // Fix the navbar
+          top: 0,
+          zIndex: 1000,
+          backgroundColor: "#121212", // Ensure consistent background
         }}
       >
         {navbarContent}
       </Box>
 
       {/* Main Content Wrapper */}
-      <Box sx={{ display: "flex", flex: 1 }}>
+      <Box
+        sx={{
+          display: "flex",
+          flex: 1,
+          marginTop: "60px", // Push below the fixed navbar
+        }}
+      >
         {/* Sidebar Section */}
         <Box
           sx={{
-            width: { xs:'70px', sm:'200px', md:'250px', lg:'300px' }, // Responsive Width of the sidebar
-            transition: "all 0.3s ease-in-out",  // transistion for responsiveness
+            width: { xs: "70px", sm: "200px", md: "250px", lg: "300px" }, // Responsive Width of the sidebar
+            transition: "all 0.3s ease-in-out", // Transition for responsiveness
             borderRight: "2px solid #fff", // Line on the right of the sidebar
             padding: "20px",
+            position: "fixed", // Fix the sidebar
+            top: "60px", // Position below the navbar
+            bottom: 0,
+            zIndex: 900,
+            backgroundColor: "#121212", // Ensure consistent background
+            overflowY: "auto", // Scrollable if the sidebar content overflows
           }}
         >
           {sidebarContent}
@@ -45,7 +61,10 @@ const Layout = ({ navbarContent, sidebarContent, mainContent }) => {
         <Box
           sx={{
             flex: 1,
+            marginLeft: { xs: "70px", sm: "200px", md: "250px", lg: "300px" }, // Push beside the fixed sidebar
             padding: "20px",
+            overflowY: "auto", // Enable scrolling for the main content
+            height: "calc(100vh - 60px)", // Full height minus the navbar
           }}
         >
           {mainContent}
