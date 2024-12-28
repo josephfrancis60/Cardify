@@ -73,7 +73,7 @@ const CreateProfileModal = () => {
         Create
       </Button>
 
-      <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
+      <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm" >
         <DialogTitle sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontWeight: "bold", fontFamily: '"Roboto", sans-serif' }}>
           Create New Profile Card
           <IconButton onClick={handleClose}>
