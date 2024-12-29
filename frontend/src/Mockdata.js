@@ -20,7 +20,7 @@ const mockUsers = [
       name: 'Jane Smith',
       role: 'Product Manager',
       image: 'https://randomuser.me/api/portraits/women/2.jpg',
-      description: 'Product manager with a focus on user experience and innovative solutions.',
+      description: 'Product manager with a focus on user experience and innovative solutions.on user experience and innovative solutions',
       socialLinks: {
         gmail: '',
         linkedin: 'https://www.linkedin.com/in/janesmith',
@@ -34,7 +34,7 @@ const mockUsers = [
       name: 'Samuel Lee',
       role: 'UX Designer',
       image: 'https://randomuser.me/api/portraits/men/3.jpg',
-      description: 'UX designer focused on creating intuitive and engaging user interfaces.',
+      description: 'UX designer focused on creating intuitive and engaging user interfaces.UX designer focused on creating intuitive and engaging user interfacesUX designer focused on creating intuitive and engaging user interfacesUX designer focused on creating intuitive and engaging user interfacesUX designer focused on creating intuitive and engaging user interfaces',
       socialLinks: {
         gmail: 'mailto:samuel.lee@example.com',
         linkedin: 'https://www.linkedin.com/in/samuellee',

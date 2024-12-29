@@ -1,6 +1,6 @@
 import React from 'react';
 import Grid from '@mui/material/Grid2';
-import ProfileCard from './ProfileCard';
+import Profilecard from './Profilecard';
 import mockUsers from '../Mockdata';
 
 const Profilegrid = () => {
@@ -9,7 +9,7 @@ const Profilegrid = () => {
       {mockUsers.map((user) => (
         <Grid item xs={12} sm={6} md={4} lg={3} key={user.id}>
           {/* Profile card component */}
-          <ProfileCard 
+          <Profilecard 
             name={user.name} 
             role={user.role} 
             image={user.image} 
