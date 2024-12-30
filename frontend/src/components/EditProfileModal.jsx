@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField, IconButton, Box } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import CloseIcon from "@mui/icons-material/Close";
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+
 
 const EditProfileModal = () => {
   const [open, setOpen] = useState(false);
@@ -57,7 +59,7 @@ const EditProfileModal = () => {
         onClick={handleOpen}
         sx={{ width: 30, height: 30 }}
       >
-        <EditIcon sx={{ color: "#fff", fontSize: "20px" }} />
+        <EditOutlinedIcon sx={{ color: "#fff", fontSize: "20px" }} />
       </IconButton>
 
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">

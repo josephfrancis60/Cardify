@@ -6,6 +6,7 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import DeleteIcon from '@mui/icons-material/Delete';  // Import delete icon
 import EditProfileModal from './EditProfileModal';
+import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 
 const Profilecard = ({ name, role, image, description, socialLinks, categories }) => {
   return (
@@ -140,15 +141,16 @@ const Profilecard = ({ name, role, image, description, socialLinks, categories }
           gap: 1 
         }}
       >
-        {/* Edit Porfile Modal for edit button */}
+        {/* edit button - Edit Porfile Modal */}
         <EditProfileModal />
 
+        {/* delete button */}
         <IconButton 
           color="error" 
           aria-label="delete"
           sx={{ width: 30, height: 30, }}  // Set smaller size for the delete button
         >
-          <DeleteIcon sx={{ color: '#ed7632', fontSize: '20px' }} />
+          <DeleteOutlineRoundedIcon sx={{ color: '#ed7632', fontSize: '20px' }} />
         </IconButton>
       </Box>
     </Card>
