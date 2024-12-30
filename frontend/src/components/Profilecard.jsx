@@ -1,9 +1,5 @@
 import React from 'react';
 import { Card, CardContent, Typography, Box, Avatar, IconButton, Chip, hexToRgb } from '@mui/material';
-import GmailIcon from '@mui/icons-material/Email';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import FacebookIcon from '@mui/icons-material/Facebook';
 import EditProfileModal from './EditProfileModal';
 import deleteicon from '../assets/icons/delete.png'; // delete icon
 import gmailicon from '../assets/icons/gmail.png'; // gmail icon
