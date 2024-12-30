@@ -65,6 +65,11 @@ const Layout = ({ navbarContent, sidebarContent, mainContent }) => {
             padding: "20px",
             overflowY: "auto", // Enable scrolling for the main content
             height: "calc(100vh - 60px)", // Full height minus the navbar
+            // Styles for the scrollbar
+            '&::-webkit-scrollbar': {width: '14px',},
+            '&::-webkit-scrollbar-thumb': {backgroundColor: '#808080', borderRadius: '0px'},
+            '&::-webkit-scrollbar-thumb:hover': {backgroundColor: '#636363'},
+            '&::-webkit-scrollbar-track': {backgroundColor: '#fff', borderRadius: '0px'},
           }}
         >
           {mainContent}

@@ -99,6 +99,20 @@ const mockUsers = [
       },
       categories: [],
     },
+    {
+      id: 8,
+      name: 'James Green 2',
+      role: 'Business Analyst 2',
+      image: 'https://randomuser.me/api/portraits/men/5.jpg',
+      description: 'Business analyst with expertise in data-driven decision making and process optimization.',
+      socialLinks: {
+        gmail: 'mailto:james.green@example.com',
+        linkedin: 'https://www.linkedin.com/in/jamesgreen',
+        twitter: '',
+        facebook: 'https://facebook.com/jamesgreen',
+      },
+      categories: [],
+    },
   ];
   
   export default mockUsers;

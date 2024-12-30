@@ -5,17 +5,30 @@ import mockUsers from '../Mockdata';
 
 const Profilegrid = () => {
   return (
-    <Grid container spacing={3} sx={{ padding: 3 }}>
+    <Grid
+      container
+      spacing={3}
+      sx={{
+        padding: 3,
+        justifyContent: 'center', // Center the grid within the container
+        margin: 'auto', // Center the grid horizontally
+      }}
+    >
       {mockUsers.map((user) => (
-        <Grid item xs={12} sm={6} md={4} lg={3} key={user.id}>
-          {/* Profile card component */}
-          <Profilecard 
-            name={user.name} 
-            role={user.role} 
-            image={user.image} 
-            description={user.description} 
-            socialLinks={user.socialLinks} 
-            categories={user.categories} 
+        <Grid
+          item
+          xs={12} // Full-width on extra-small screens
+          sm={6} // Two cards per row on small screens
+          md={4} // Three cards per row on medium and larger screens
+          key={user.id}
+        >
+          <Profilecard
+            name={user.name}
+            role={user.role}
+            image={user.image}
+            description={user.description}
+            socialLinks={user.socialLinks}
+            categories={user.categories}
           />
         </Grid>
       ))}
