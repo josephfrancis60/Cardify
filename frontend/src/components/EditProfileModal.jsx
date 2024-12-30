@@ -184,7 +184,7 @@ const EditProfileModal = () => {
             }}
             variant="contained"
           >
-            Save Changes
+            Save
           </Button>
         </DialogActions>
       </Dialog>

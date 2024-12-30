@@ -1,12 +1,15 @@
 import React from 'react';
-import { Card, CardContent, Typography, Box, Avatar, IconButton, Chip } from '@mui/material';
+import { Card, CardContent, Typography, Box, Avatar, IconButton, Chip, hexToRgb } from '@mui/material';
 import GmailIcon from '@mui/icons-material/Email';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import FacebookIcon from '@mui/icons-material/Facebook';
-import DeleteIcon from '@mui/icons-material/Delete';  // Import delete icon
 import EditProfileModal from './EditProfileModal';
-import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
+import deleteicon from '../assets/icons/delete.png'; // delete icon
+import gmailicon from '../assets/icons/gmail.png'; // gmail icon
+import linkedinicon from '../assets/icons/linkedin.png'; // linkedin icon
+import twittericon from '../assets/icons/twitter.png'; // twitter icon
+import facebookicon from '../assets/icons/facebook.png'; // facebook icon
 
 const Profilecard = ({ name, role, image, description, socialLinks, categories }) => {
   return (
@@ -88,7 +91,7 @@ const Profilecard = ({ name, role, image, description, socialLinks, categories }
               target="_blank" 
               aria-label="Gmail"
             >
-              <GmailIcon sx={{ color: '#fff' }} />
+              <img src={gmailicon} alt='gmail_icon' style={{width:25, height:25}} />
             </IconButton>
           )}
           {socialLinks.linkedin && (
@@ -98,7 +101,7 @@ const Profilecard = ({ name, role, image, description, socialLinks, categories }
               target="_blank" 
               aria-label="LinkedIn"
             >
-              <LinkedInIcon sx={{ color: '#fff' }} />
+              <img src={linkedinicon} alt='linkedin_icon' style={{width:25, height:25}} />
             </IconButton>
           )}
           {socialLinks.twitter && (
@@ -108,7 +111,7 @@ const Profilecard = ({ name, role, image, description, socialLinks, categories }
               target="_blank" 
               aria-label="Twitter"
             >
-              <TwitterIcon sx={{ color: '#fff' }} />
+              <img src={twittericon} alt='twitter_icon' style={{width:25, height:25,}} />
             </IconButton>
           )}
           {socialLinks.facebook && (
@@ -118,7 +121,7 @@ const Profilecard = ({ name, role, image, description, socialLinks, categories }
               target="_blank" 
               aria-label="Facebook"
             >
-              <FacebookIcon sx={{ color: '#fff' }} />
+              <img src={facebookicon} alt='facebook_icon' style={{width:25, height:25}} />
             </IconButton>
           )}
         </Box>
@@ -150,7 +153,8 @@ const Profilecard = ({ name, role, image, description, socialLinks, categories }
           aria-label="delete"
           sx={{ width: 30, height: 30, }}  // Set smaller size for the delete button
         >
-          <DeleteOutlineRoundedIcon sx={{ color: '#ed7632', fontSize: '20px' }} />
+          <img src={deleteicon} alt='delete_icon' style={{width:20, height:20}} />   
+          {/*<DeleteOutlineRoundedIcon sx={{ color: '#ed7632', fontSize: '20px' }} /> */}
         </IconButton>
       </Box>
     </Card>

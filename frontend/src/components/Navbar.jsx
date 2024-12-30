@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Typography, Button } from "@mui/material";
 import Searchbar from "./Searchbar"; // Import the SearchBar component
+import cardifylogo from '../assets/icons/cardify_logo.png'; // logo img
 
 const Navbar = () => {
   return (
@@ -8,7 +9,6 @@ const Navbar = () => {
       sx={{
         width: "100%",
         height: "100%", // Matches the height defined in Layout
-        backgroundColor: "#1e1e1e", // Slightly lighter background color for navbar
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between", // Space between left, middle, and right sections
@@ -21,9 +21,11 @@ const Navbar = () => {
         sx={{
           color: "#fff",
           cursor: "pointer",
+          
         }}
       >
-        Project Name
+        {/* logo */}
+        <img src={cardifylogo} alt="logo" style={{height:50, width:110, paddingTop:'10px'}} />
       </Typography>
 
       {/* Search Box */}
@@ -31,7 +33,11 @@ const Navbar = () => {
         <Searchbar />
       </Box>
 
-      {/* Button */}
+
+      {/* dark/light mode switch */}  
+      
+
+      {/* Button 
       <Button
         variant="contained"
         sx={{
@@ -45,6 +51,8 @@ const Navbar = () => {
       >
         dark/light mode
       </Button>
+      */}
+
     </Box>
   );
 };

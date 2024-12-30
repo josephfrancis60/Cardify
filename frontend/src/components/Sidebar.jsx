@@ -4,11 +4,11 @@ import WorkIcon from "@mui/icons-material/Work";
 import PersonIcon from "@mui/icons-material/Person";
 import BusinessIcon from "@mui/icons-material/Business";
 import PeopleIcon from "@mui/icons-material/People";
-import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
 import CreateProfileModal from "./CreateProfileModal";
+import RecentActorsOutlinedIcon from '@mui/icons-material/RecentActorsOutlined';
 
 const categories = [
-  { label: "All", icon: <AllInclusiveIcon /> },
+  { label: "All", icon: <RecentActorsOutlinedIcon /> },
   { label: "Work", icon: <WorkIcon /> },
   { label: "Personal", icon: <PersonIcon /> },
   { label: "Business", icon: <BusinessIcon /> },
@@ -53,6 +53,7 @@ const Sidebar = () => {
               },
               justifyContent: "flex-start",
               paddingLeft: "20px",
+              borderRadius: "20px",
             }}
           >
             <span
@@ -75,9 +76,10 @@ const Sidebar = () => {
         sx={{
           color: "#bbb",
           marginTop: "30px",
+          
         }}
       >
-        Your Project Tagline Goes Here
+        Profiles, reimagined with Cardify
       </Typography>
     </Box>
   );

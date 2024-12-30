@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField, IconButton, Box, Radio, RadioGroup, FormControlLabel, FormLabel } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
+import AddToPhotosOutlinedIcon from '@mui/icons-material/AddToPhotosOutlined';
 
 const CreateProfileModal = () => {
   const [open, setOpen] = useState(false);
@@ -57,14 +57,14 @@ const CreateProfileModal = () => {
       <Button
         variant="contained"
         size="medium"
-        startIcon={<AddIcon />}
+        startIcon={<AddToPhotosOutlinedIcon />}
         onClick={handleOpen}
         sx={{
           width: "150px",
           height: "50px",
           marginY: "70px",
           backgroundColor: "#ff0000",
-          "&:hover": { backgroundColor: "#115293" },
+          "&:hover": { backgroundColor: "#f53838" },
           textTransform: "none",
           fontWeight: "bold",
           fontSize: "19px",
