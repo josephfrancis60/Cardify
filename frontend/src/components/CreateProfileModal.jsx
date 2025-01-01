@@ -68,6 +68,7 @@ const CreateProfileModal = () => {
           textTransform: "none",
           fontWeight: "bold",
           fontSize: "19px",
+          borderRadius: '10px'
         }}
       >
         Create
