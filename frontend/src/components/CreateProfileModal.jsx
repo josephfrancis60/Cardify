@@ -61,7 +61,7 @@ const CreateProfileModal = () => {
         onClick={handleOpen}
         sx={{
           width: {xs: "auto", sm: "150px"},
-          height: {xs: "30px", sm: "50px"},
+          height: {xs: "40px", sm: "50px"},
           marginY: {xs: "0", sm: "70px"},
           marginRight:{ xs: "10px", sm: "0" },
           backgroundColor: "#ff0000",
