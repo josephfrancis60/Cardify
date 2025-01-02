@@ -60,15 +60,16 @@ const CreateProfileModal = () => {
         startIcon={<AddToPhotosOutlinedIcon />}
         onClick={handleOpen}
         sx={{
-          width: "150px",
-          height: "50px",
-          marginY: "70px",
+          width: {xs: "auto", sm: "150px"},
+          height: {xs: "30px", sm: "50px"},
+          marginY: {xs: "0", sm: "70px"},
+          marginRight:{ xs: "10px", sm: "0" },
           backgroundColor: "#ff0000",
           "&:hover": { backgroundColor: "#f53838" },
           textTransform: "none",
           fontWeight: "bold",
           fontSize: "19px",
-          borderRadius: '10px'
+          borderRadius: '10px',
         }}
       >
         Create

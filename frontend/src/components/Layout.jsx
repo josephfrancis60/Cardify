@@ -36,22 +36,28 @@ const Layout = ({ navbarContent, sidebarContent, mainContent }) => {
         sx={{
           display: "flex",
           flex: 1,
+          flexDirection: { xs: "column", sm: "row" }, // Sidebar moves to the top for XS
           marginTop: "60px", // Push below the fixed navbar
+          height: "calc(100% - 60px)",
         }}
       >
         {/* Sidebar Section */}
         <Box
           sx={{
-            width: { xs: "70px", sm: "200px", md: "250px", lg: "300px" }, // Responsive Width of the sidebar
+            width: { xs: "100%", sm: "200px", md: "250px", lg: "300px" }, // Responsive Width of the sidebar
+            height: { xs: "60px", sm: "100%" }, // Sidebar height for XS
             transition: "all 0.3s ease-in-out", // Transition for responsiveness
-            borderRight: "1px solid #3d3d3d", // Line on the right of the sidebar
+            borderBottom: { xs: "1px solid #3d3d3d", sm: "none" }, // Border for XS
+            borderRight: { xs: "none", sm: "1px solid #3d3d3d" }, // Border for other screens
             padding: "20px",
-            position: "fixed", // Fix the sidebar
-            top: "60px", // Position below the navbar
-            bottom: 0,
+            position: { xs: "relative", sm: "fixed" }, // Sidebar is not fixed for XS
+            top: { xs: "0", sm: "60px" }, // Position below the navbar for SM and above
             zIndex: 900,
             backgroundColor: "#121212", // Ensure consistent background
-            overflowY: "auto", // Scrollable if the sidebar content overflows
+            overflowX: { xs: "auto", sm: "hidden" }, // Horizontal scrolling for XS
+            display: { xs: "flex", sm: "block" },
+            flexDirection: { xs: "row", sm: "column" }, // Horizontal buttons for XS
+            alignItems: { xs: "center", sm: "flex-start" }, // Center buttons for XS
           }}
         >
           {sidebarContent}
@@ -61,15 +67,19 @@ const Layout = ({ navbarContent, sidebarContent, mainContent }) => {
         <Box
           sx={{
             flex: 1,
-            marginLeft: { xs: "70px", sm: "200px", md: "250px", lg: "300px" }, // Push beside the fixed sidebar
+            marginLeft: { xs: "0", sm: "200px", md: "250px", lg: "300px" }, // Push beside the fixed sidebar for SM and above
+            marginTop: { xs: "0", sm: "0" }, // Push below the sidebar for XS
             padding: "20px",
             overflowY: "auto", // Enable scrolling for the main content
-            height: "calc(100vh - 60px)", // Full height minus the navbar
+            height: { xs: "calc(100vh - 120px)", sm: "calc(100vh - 60px)" }, // Adjust height for XS
             // Styles for the scrollbar
-            '&::-webkit-scrollbar': {width: '14px',},
-            '&::-webkit-scrollbar-thumb': {backgroundColor: '#808080', borderRadius: '0px'},
-            '&::-webkit-scrollbar-thumb:hover': {backgroundColor: '#636363'},
-            '&::-webkit-scrollbar-track': {backgroundColor: '#fff', borderRadius: '0px'},
+            "&::-webkit-scrollbar": { width: "14px" },
+            "&::-webkit-scrollbar-thumb": {
+              backgroundColor: "#808080",
+              borderRadius: "0px",
+            },
+            "&::-webkit-scrollbar-thumb:hover": { backgroundColor: "#636363" },
+            "&::-webkit-scrollbar-track": { backgroundColor: "#fff", borderRadius: "0px" },
           }}
         >
           {mainContent}

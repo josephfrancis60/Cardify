@@ -22,14 +22,21 @@ const Sidebar = () => {
     <Box
       sx={{
         display: "flex",
-        flexDirection: "column",
+        flexDirection: { xs: "row", sm: "column" },
         justifyContent: "space-between",
         height: "100%",
         bgcolor: "#121212", // Optional: Dark theme
       }}
     >
       {/* Top Section with "Create" Button */}
-      <Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "row", sm: "column" },
+          alignItems: "center",
+          gap: "10px",
+        }}
+      >
         {/* file for create profile button */}
         <CreateProfileModal />
 
@@ -41,8 +48,8 @@ const Sidebar = () => {
             variant="outlined"
             size="small"
             sx={{
-              width: "100%",
-              marginBottom: "10px",
+              width: {xs: "100", sm: "100%"},
+              marginBottom: {xs: "0", sm: "10px"},
               color: "#fff", // Button text remains white
               backgroundColor:
                 selectedCategory === category.label ? "#333" : "transparent", // Background for selected button
