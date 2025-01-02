@@ -5,7 +5,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import BusinessIcon from "@mui/icons-material/Business";
 import PeopleIcon from "@mui/icons-material/People";
 import CreateProfileModal from "./CreateProfileModal";
-import RecentActorsOutlinedIcon from '@mui/icons-material/RecentActorsOutlined';
+import RecentActorsOutlinedIcon from "@mui/icons-material/RecentActorsOutlined";
 
 const categories = [
   { label: "All", icon: <RecentActorsOutlinedIcon /> },
@@ -23,24 +23,34 @@ const Sidebar = () => {
       sx={{
         display: "flex",
         flexDirection: { xs: "row", sm: "column" },
-        justifyContent: "space-between",
+        justifyContent: "space-around",
         height: "100%",
         bgcolor: "#121212", // Optional: Dark theme
+        overflow: "hidden",
       }}
     >
-      {/* Top Section with "Create" Button */}
+      {/* Fixed "Create" Button */}
+      <Box
+        sx={{
+          flexShrink: 0,
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <CreateProfileModal />
+      </Box>
+
+      {/* Scrollable Category Buttons (XS) */}
       <Box
         sx={{
           display: "flex",
           flexDirection: { xs: "row", sm: "column" },
-          alignItems: "center",
-          gap: "10px",
+          overflowX: { xs: "auto", sm: "hidden" },
+          overflowY: "hidden",
+          gap: { xs: "0px", sm: "10px" },
+          flexWrap: { xs: "nowrap", sm: "wrap" }, // Prevent wrap on XS
         }}
       >
-        {/* file for create profile button */}
-        <CreateProfileModal />
-
-        {/* Category Navigation Buttons */}
         {categories.map((category, index) => (
           <Button
             key={index}
@@ -48,25 +58,28 @@ const Sidebar = () => {
             variant="outlined"
             size="small"
             sx={{
-              width: {xs: "100", sm: "100%"},
-              marginBottom: {xs: "0", sm: "10px"},
-              color: "#fff", // Button text remains white
+              flexShrink: 0,
+              minWidth: { xs: "80px", sm: "100%" },
+              color: "#fff",
               backgroundColor:
-                selectedCategory === category.label ? "#333" : "transparent", // Background for selected button
+                selectedCategory === category.label ? "#333" : "transparent",
               borderColor:
-                selectedCategory === category.label ? "#fff" : "transparent", // Borderline for selected button
+                selectedCategory === category.label ? "#fff" : "transparent",
               "&:hover": {
-                backgroundColor: selectedCategory === category.label ? "#444" : "#222",
+                backgroundColor:
+                  selectedCategory === category.label ? "#444" : "#222",
               },
               justifyContent: "flex-start",
               paddingLeft: "20px",
               borderRadius: "20px",
+              marginBottom: { xs: "0px", sm: "10px" }, // Restore spacing on larger screens
             }}
           >
             <span
               style={{
                 marginRight: "15px",
-                color: selectedCategory === category.label ? "#fff" : "#ff0000", // Icon color changes dynamically
+                color:
+                  selectedCategory === category.label ? "#fff" : "#ff0000",
               }}
             >
               {category.icon}
@@ -77,17 +90,17 @@ const Sidebar = () => {
       </Box>
 
       {/* Bottom Section with Tagline */}
-        <Typography
-          variant="caption"
-          align="center"
-          sx={{
-            color: "#bbb",
-            marginTop: "30px",
-            display: { xs:'none', sm:'block' },
-          }}
-        >
-          Profiles, reimagined with Cardify
-        </Typography>
+      <Typography
+        variant="caption"
+        align="center"
+        sx={{
+          color: "#bbb",
+          marginTop: "30px",
+          display: { xs: "none", sm: "block" },
+        }}
+      >
+        Profiles, reimagined with Cardify
+      </Typography>
     </Box>
   );
 };

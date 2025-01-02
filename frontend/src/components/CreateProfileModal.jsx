@@ -62,7 +62,7 @@ const CreateProfileModal = () => {
         sx={{
           width: {xs: "auto", sm: "150px"},
           height: {xs: "40px", sm: "50px"},
-          marginY: {xs: "0", sm: "70px"},
+          marginY: {xs: "0", sm: "10px"},
           marginRight:{ xs: "10px", sm: "0" },
           backgroundColor: "#ff0000",
           "&:hover": { backgroundColor: "#f53838" },

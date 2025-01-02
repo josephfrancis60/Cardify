@@ -49,7 +49,7 @@ const Layout = ({ navbarContent, sidebarContent, mainContent }) => {
             transition: "all 0.3s ease-in-out", // Transition for responsiveness
             borderBottom: { xs: "1px solid #3d3d3d", sm: "none" }, // Border for XS
             borderRight: { xs: "none", sm: "1px solid #3d3d3d" }, // Border for other screens
-            padding: "20px",
+            padding: { xs: "10px", sm: "20px" },
             position: { xs: "relative", sm: "fixed" }, // Sidebar is not fixed for XS
             top: { xs: "0", sm: "60px" }, // Position below the navbar for SM and above
             zIndex: 900,
