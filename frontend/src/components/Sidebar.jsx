@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Hidden, Typography } from "@mui/material";
 import WorkIcon from "@mui/icons-material/Work";
 import PersonIcon from "@mui/icons-material/Person";
 import BusinessIcon from "@mui/icons-material/Business";
@@ -70,17 +70,18 @@ const Sidebar = () => {
       </Box>
 
       {/* Bottom Section with Tagline */}
-      <Typography
-        variant="caption"
-        align="center"
-        sx={{
-          color: "#bbb",
-          marginTop: "30px",
-          
-        }}
-      >
-        Profiles, reimagined with Cardify
-      </Typography>
+      <Hidden smDown>   {/* Hides typography in xs screen sizes */}
+        <Typography
+          variant="caption"
+          align="center"
+          sx={{
+            color: "#bbb",
+            marginTop: "30px",
+          }}
+        >
+          Profiles, reimagined with Cardify
+        </Typography>
+      </Hidden>
     </Box>
   );
 };
