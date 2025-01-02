@@ -73,13 +73,13 @@ const Layout = ({ navbarContent, sidebarContent, mainContent }) => {
             overflowY: "auto", // Enable scrolling for the main content
             height: { xs: "calc(100vh - 120px)", sm: "calc(100vh - 60px)" }, // Adjust height for XS
             // Styles for the scrollbar
-            "&::-webkit-scrollbar": { width: "14px" },
+            "&::-webkit-scrollbar": { width: {xs: "0px", sm:"7px"} },  // no scrollbar in xs screen size
             "&::-webkit-scrollbar-thumb": {
-              backgroundColor: "#808080",
-              borderRadius: "0px",
+              backgroundColor: "#FF6961",
+              borderRadius: "10px",
             },
             "&::-webkit-scrollbar-thumb:hover": { backgroundColor: "#636363" },
-            "&::-webkit-scrollbar-track": { backgroundColor: "#fff", borderRadius: "0px" },
+            "&::-webkit-scrollbar-track": { backgroundColor: "#fff", borderRadius: "10px" },
           }}
         >
           {mainContent}
