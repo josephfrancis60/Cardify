@@ -9,7 +9,7 @@ const Profilegrid = () => {
       container
       spacing={3}
       sx={{
-        padding: 3,
+        padding: 2,
         justifyContent: 'center', // Center the grid within the container
         margin: 'auto', // Center the grid horizontally
       }}
