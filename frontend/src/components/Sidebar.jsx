@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Box, Button, Typography } from "@mui/material";
 import WorkIcon from "@mui/icons-material/Work";
 import PersonIcon from "@mui/icons-material/Person";
@@ -15,9 +15,7 @@ const categories = [
   { label: "Friends", icon: <PeopleIcon /> },
 ];
 
-const Sidebar = () => {
-  const [selectedCategory, setSelectedCategory] = useState("All");
-
+const Sidebar = ({ selectedCategory, setSelectedCategory }) => {
   return (
     <Box
       sx={{
@@ -29,7 +27,7 @@ const Sidebar = () => {
         overflow: "hidden",
       }}
     >
-      {/* Fixed "Create" Button */}
+      {/* Create Profile Button */}
       <Box
         sx={{
           flexShrink: 0,
@@ -40,7 +38,7 @@ const Sidebar = () => {
         <CreateProfileModal />
       </Box>
 
-      {/* Scrollable Category Buttons (XS) */}
+      {/* Category Buttons */}
       <Box
         sx={{
           display: "flex",
@@ -48,7 +46,7 @@ const Sidebar = () => {
           overflowX: { xs: "auto", sm: "hidden" },
           overflowY: "hidden",
           gap: { xs: "0px", sm: "10px" },
-          flexWrap: { xs: "nowrap", sm: "wrap" }, // Prevent wrap on XS
+          flexWrap: { xs: "nowrap", sm: "wrap" },
         }}
       >
         {categories.map((category, index) => (
@@ -72,7 +70,7 @@ const Sidebar = () => {
               justifyContent: "flex-start",
               paddingLeft: "20px",
               borderRadius: "20px",
-              marginBottom: { xs: "0px", sm: "10px" }, // Restore spacing on larger screens
+              marginBottom: { xs: "0px", sm: "10px" },
             }}
           >
             <span
@@ -89,7 +87,7 @@ const Sidebar = () => {
         ))}
       </Box>
 
-      {/* Bottom Section with Tagline */}
+      {/* Footer Tagline */}
       <Typography
         variant="caption"
         align="center"
