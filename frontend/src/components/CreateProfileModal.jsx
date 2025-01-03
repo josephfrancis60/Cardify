@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField, IconButton, Box, Radio, RadioGroup, FormControlLabel, FormLabel } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import AddToPhotosOutlinedIcon from '@mui/icons-material/AddToPhotosOutlined';
+import cardemoji from '../assets/icons/card_emoji.png'; 
 
 const CreateProfileModal = () => {
   const [open, setOpen] = useState(false);
@@ -77,10 +78,15 @@ const CreateProfileModal = () => {
 
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm" >
         <DialogTitle sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontWeight: "bold", fontFamily: '"Roboto", sans-serif' }}>
-          Create New Profile Card
-          <IconButton onClick={handleClose}>
-            <CloseIcon />
-          </IconButton>
+          <Box>
+            My New Profile Card
+            <img src={cardemoji} alt="card_emoji" style={{height:20, width:20, marginLeft:10,}} />
+          </Box>
+          <Box>
+            <IconButton onClick={handleClose}>
+              <CloseIcon />
+            </IconButton>
+          </Box>
         </DialogTitle>
         <DialogContent>
           {/* Full Name and Role (Same Row) */}
