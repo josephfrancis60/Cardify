@@ -7,7 +7,7 @@ import { Box, Typography } from '@mui/material';
 const Profilegrid = ({selectedCategory}) => {
   return (
     <Box>
-      <Typography
+      <Typography  // Heading 
         variant='h5'
         fontWeight='bold'
         marginBottom={1}
