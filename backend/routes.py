@@ -31,7 +31,7 @@ def create_profile():
     else:
         img_url = None
     
-    social_links = data.get("social_links", [])  # defaults to an empty list
+    social_links = data.get("social_links", {})  # defaults to an empty list
     categories = data.get("categories", [])  # defaults to an empty list
 
     # Validation: muat enter these fields

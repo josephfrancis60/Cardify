@@ -1,4 +1,5 @@
 from app import db
+from sqlalchemy import JSON
 
 class Profile(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -7,7 +8,9 @@ class Profile(db.Model):
     description = db.Column(db.Text, unique=False, nullable=False)
     gender = db.Column(db.String(10), unique=False, nullable=False)
     img_url = db.Column(db.String(200), unique=False, nullable=True)
-    social_links = db.Column(db.PickleType, default=[], unique=True)   # stores upto 4 links
+    social_links = db.Column(JSON, default={
+        "gmail": "", "linkedin": "", "twitter": "", "facebook": ""
+    }, unique=True)   # stores upto 4 links
     categories = db.Column(db.PickleType, default=[])    # stores categories as a list
 
 
