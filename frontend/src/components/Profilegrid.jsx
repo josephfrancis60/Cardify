@@ -10,24 +10,32 @@ const Profilegrid = ({selectedCategory, users, setUsers}) => {
 
   useEffect(() => {
     const getUsers = async () => {
+      setLoading(true); // Start loading when fetching data
       try {
-        const res = await fetch(BASE_URL + "/profiles")    // later change to /category/all 
+        const endpoint =
+          selectedCategory.toLowerCase() === "all"
+            ? `${BASE_URL}/profiles`
+            : `${BASE_URL}/profiles/category/${selectedCategory}`;
+  
+        const res = await fetch(endpoint);
         const data = await res.json();
-
-        if(!res.ok) {
-          throw new Error(data.error);
+  
+        if (!res.ok) {
+          throw new Error(data.error || "Failed to fetch profiles");
         }
-        setUsers(data);
-      }
-      catch (error) {
+  
+        // Update the users state with fetched data or an empty array if no profiles are found
+        setUsers(data.length > 0 ? data : []);
+      } catch (error) {
         console.error("Error fetching profiles:", error);
+        setUsers([]); // Reset users to an empty array in case of an error
+      } finally {
+        setLoading(false); // End loading after fetching data
       }
-      finally {
-        setLoading(false);
-      }
-    }
+    };
+  
     getUsers();
-  }, [setUsers]);
+  }, [selectedCategory, setUsers]);
 
   return (
     <Box>
@@ -74,8 +82,14 @@ const Profilegrid = ({selectedCategory, users, setUsers}) => {
       
       {/* loading circle if no need - remove isloading, setloading */}
       {isLoading && (
-        <Box sx={{display:'flex', justifyContent: "center", alignItems:'center'}}>
-          <CircularProgress color='#ff0000' /> 
+        <Box 
+          sx={{
+          display: 'flex', 
+          justifyContent: 'center', 
+          alignItems: 'center', 
+        }}
+        >
+          <CircularProgress sx={{ color: 'rgb(255, 42, 42)' }} />
         </Box>
       )}
 
