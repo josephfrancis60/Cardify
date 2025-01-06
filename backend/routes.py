@@ -63,7 +63,7 @@ def update_profile(id):
     try:
         profile = Profile.query.get(id)
         if profile is None:
-            return jsonify({"error": "Friend not found"}), 400
+            return jsonify({"error": "Profile not found"}), 400
         
         data = request.json
         profile.name = data.get("name", profile.name)
