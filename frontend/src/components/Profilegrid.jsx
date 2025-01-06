@@ -19,8 +19,8 @@ const Profilegrid = ({selectedCategory, users, setUsers}) => {
         }
         setUsers(data);
       }
-      catch {
-        console.error(error)
+      catch (error) {
+        console.error("Error fetching profiles:", error);
       }
       finally {
         setLoading(false);
