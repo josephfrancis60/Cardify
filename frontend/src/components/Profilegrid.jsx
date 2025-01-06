@@ -1,10 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Grid from '@mui/material/Grid2';
 import Profilecard from './Profilecard';
-import mockUsers from '../Mockdata';
-import { Box, Typography } from '@mui/material';
+// import mockUsers from '../Mockdata';
+import { Box, CircularProgress, Typography } from '@mui/material';
+import { BASE_URL } from '../App';
 
-const Profilegrid = ({selectedCategory}) => {
+const Profilegrid = ({selectedCategory, users, setUsers}) => {
+  const [isLoading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getUsers = async () => {
+      try {
+        const res = await fetch(BASE_URL + "/profiles")    // later change to /category/all 
+        const data = await res.json();
+
+        if(!res.ok) {
+          throw new Error(data.error);
+        }
+        setUsers(data);
+      }
+      catch {
+        console.error(error)
+      }
+      finally {
+        setLoading(false);
+      }
+    }
+    getUsers();
+  }, [setUsers]);
+
   return (
     <Box>
       <Typography  // Heading 
@@ -28,7 +52,7 @@ const Profilegrid = ({selectedCategory}) => {
           margin: 'auto', // Center the grid horizontally
         }}
       >
-        {mockUsers.map((user) => (
+        {users.map((user) => (
           <Grid
             item
             xs={12} // Full-width on extra-small screens
@@ -39,14 +63,34 @@ const Profilegrid = ({selectedCategory}) => {
             <Profilecard
               name={user.name}
               role={user.role}
-              image={user.image}
+              image={user.imgUrl}
               description={user.description}
               socialLinks={user.socialLinks}
               categories={user.categories}
             />
           </Grid>
         ))}
-      </Grid>
+      </Grid> 
+      
+      {/* loading circle if no need - remove isloading, setloading */}
+      {isLoading && (
+        <Box sx={{display:'flex', justifyContent: "center", alignItems:'center'}}>
+          <CircularProgress color='#ff0000' /> 
+        </Box>
+      )}
+
+      {/* msg if no profiles */}
+      {!isLoading && users.length === 0 && (
+        <Box sx={{display:'flex', justifyContent:'center',alignItems:'center',flexDirection:'column' , marginTop:20, gap:1}}>
+          <Typography variant='h5' color='rgb(187, 178, 178)' fontWeight='bold' >
+            Oops! No Profiles... 🙁
+          </Typography> 
+          <Typography variant='caption' color='rgba(147, 145, 145, 0.8)' fontWeight='bold' >
+            Create a new Profile to see cards 
+          </Typography>
+        </Box>
+      )}
+
     </Box>
   );
 };

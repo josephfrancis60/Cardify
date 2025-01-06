@@ -5,7 +5,11 @@ import Profilegrid from './components/Profilegrid'
 import Sidebar from './components/Sidebar'
 
 
+export const BASE_URL = "http://127.0.0.1:5000";
+
 function App() {
+  const [users, setUsers] = useState([]);
+
 
   const [selectedCategory, setSelectedCategory] = useState("All");   // for dynamic heading based on category select
 
@@ -16,9 +20,12 @@ function App() {
       sidebarContent={<Sidebar 
         selectedCategory = {selectedCategory} 
         setSelectedCategory = {setSelectedCategory} 
+        setUsers = {setUsers}
       />}
       mainContent={<Profilegrid 
         selectedCategory = {selectedCategory} 
+        users = {users}
+        setUsers = {setUsers}
       />}
      />
     

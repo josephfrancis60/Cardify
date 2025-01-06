@@ -11,7 +11,7 @@ const Profilecard = ({ name, role, image, description, socialLinks, categories }
   return (
     <Card 
       sx={{ 
-        maxWidth: 350, 
+        width: 350, 
         boxShadow: 3, 
         borderRadius: 2, 
         overflow: 'hidden', 
