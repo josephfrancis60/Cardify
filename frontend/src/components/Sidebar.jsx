@@ -15,7 +15,7 @@ const categories = [
   { label: "Friends", icon: <PeopleIcon /> },
 ];
 
-const Sidebar = ({ selectedCategory, setSelectedCategory }) => {
+const Sidebar = ({ selectedCategory, setSelectedCategory, setUsers }) => {
   return (
     <Box
       sx={{
@@ -35,7 +35,9 @@ const Sidebar = ({ selectedCategory, setSelectedCategory }) => {
           alignItems: "center",
         }}
       >
-        <CreateProfileModal />
+        <CreateProfileModal
+          setUsers = {setUsers}
+        />
       </Box>
 
       {/* Category Buttons */}

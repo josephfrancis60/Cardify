@@ -1,84 +1,109 @@
-import React, { useState } from "react";
-import { Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField, IconButton, Box, Radio, RadioGroup, FormControlLabel, FormLabel, } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
+import React, { useState } from 'react';
+import { Button, Modal, Box, TextField, Typography, IconButton, Chip, Grid, FormControl, FormControlLabel, Radio, RadioGroup } from '@mui/material';
 import AddToPhotosOutlinedIcon from '@mui/icons-material/AddToPhotosOutlined';
-import cardemoji from '../assets/icons/card_emoji.png'; 
-import { BASE_URL } from "../App";
+import CloseIcon from '@mui/icons-material/Close'; // Close icon for the modal
+import { BASE_URL } from '../App'; // Replace with your actual base URL
+import { Snackbar, Alert } from '@mui/material';
 
-const CreateProfileModal = () => {
-  const [open, setOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    role: "",
-    description: "",
-    gender: "", // This will store the selected gender
-    socialLinks: {
-      gmail: "", linkedin: "", twitter: "", facebook: "",
-    },
-    categories: [], // This will store selected categories
+const CreateProfileModal = ({ setUsers }) => {
+  const [open, setOpen] = useState(false); // Modal open state
+  const [name, setName] = useState('');
+  const [role, setRole] = useState('');
+  const [description, setDescription] = useState('');
+  const [socialLinks, setSocialLinks] = useState({
+    gmail: '',
+    linkedin: '',
+    twitter: '',
+    facebook: '',
   });
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [gender, setGender] = useState('male'); // State for gender
 
-  // Open/close dialog handlers
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  // add (https://) prefix to socialLinks if not already present
+  const formattedSocialLinks = Object.fromEntries(
+    Object.entries(socialLinks).map(([key, value]) => [
+      key,
+      value ? (value.startsWith('http://') || value.startsWith('https://') ? value : `https://${value}`) : '',
+    ])
+  );
 
-  // Handle text field changes
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  const [openSnackbar, setOpenSnackbar] = useState(false);  // snackbar visibility
+  const [snackbarMessage, setSnackbarMessage] = useState('');  // Snackbar message 
 
-  // Handle social link changes
-  const handleSocialLinkChange = (platform, value) => {
-    setFormData({
-      ...formData,
-      socialLinks: {
-        ...formData.socialLinks,
-        [platform]: value,  // update the specific social link key
-      },
-    });
-  };
+  const handleOpen = () => setOpen(true); // Open the modal
+  const handleClose = () => setOpen(false); // Close the modal
 
-  // Handle category selection toggle
-  const toggleCategory = (category) => {
-    const updatedCategories = [...formData.categories];
-    if (updatedCategories.includes(category)) {
-      // If category is already selected, remove it
-      setFormData({
-        ...formData,
-        categories: updatedCategories.filter((item) => item !== category),
-      });
-    } else {
-      // If category is not selected, add it
-      setFormData({ ...formData, categories: [...updatedCategories, category] });
+  // Handle category button click
+  const handleCategoryClick = (category) => {
+    if (!selectedCategories.includes(category)) {
+      setSelectedCategories([...selectedCategories, category]);
     }
   };
 
-  // Handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();   // prevent page refresh
-    console.log("Profile Created:", formData);
+  // Handle chip delete
+  const handleRemoveCategory = (category) => {
+    const updatedCategories = selectedCategories.filter(
+      (item) => item !== category
+    );
+    setSelectedCategories(updatedCategories);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    // Prepare profile data
+    const profileData = {
+      name,
+      role,
+      description,
+      gender,
+      socialLinks: formattedSocialLinks,
+      categories: selectedCategories,
+    };
+    console.log(profileData);  //from client 
 
     try {
-      const res = await fetch(BASE_URL + "/profiles", {
-        method: "POST",
+      const response = await fetch(`${BASE_URL}/profiles`, {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
-      })
+        body: JSON.stringify(profileData),
+      });
 
-      const data = await res.data.json();
-      if(!res.ok) {
-        throw new Error(data.error)
-      }
-      // taost
-      handleClose();
-    }
-    catch (error) {
+      const data = await response.json();
+      console.log(data);  // response from api server
       
+      if (response.ok) {
+        setUsers((prevUsers) => [...prevUsers, data]); // Add new profile to the existing users
+        // TOAST
+        setSnackbarMessage('Profile created successfully!');
+        setOpenSnackbar(true);
+        handleClose(); // Close modal after successful submission
+
+        // clear imputs after successfull submission
+        setName('');
+        setRole('');
+        setDescription('');
+        setGender('');
+        setSelectedCategories([]);
+        setSocialLinks({
+          gmail: '',
+          linkedin: '',
+          twitter: '',
+          facebook: '',
+        });
+
+      } else {
+        console.error('Error creating profile:', data.error);                //TODO  : proper toast msg for missing / required fields
+        setSnackbarMessage(error.message);
+        setOpenSnackbar(true);
+      }
+    } catch (error) {
+      console.error('Error creating profile:', error);
+      setSnackbarMessage('Failed to create profile.');
+      setOpenSnackbar(true);
     }
-    
   };
 
   return (
@@ -89,165 +114,255 @@ const CreateProfileModal = () => {
         startIcon={<AddToPhotosOutlinedIcon />}
         onClick={handleOpen}
         sx={{
-          width: {xs: "auto", sm: "150px"},
-          height: {xs: "40px", sm: "50px"},
-          marginY: {xs: "0", sm: "10px"},
-          marginRight:{ xs: "10px", sm: "0" },
-          backgroundColor: "#ff0000",
-          "&:hover": { backgroundColor: "#f53838" },
-          textTransform: "none",
-          fontWeight: "bold",
-          fontSize: "19px",
+          width: { xs: 'auto', sm: '150px' },
+          height: { xs: '40px', sm: '50px' },
+          marginY: { xs: '0', sm: '10px' },
+          marginRight: { xs: '10px', sm: '0' },
+          backgroundColor: '#ff0000',
+          '&:hover': { backgroundColor: '#f53838' },
+          textTransform: 'none',
+          fontWeight: 'bold',
+          fontSize: '19px',
           borderRadius: '10px',
         }}
       >
         Create
       </Button>
 
-      <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm" >
-        <DialogTitle sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontWeight: "bold", fontFamily: '"Roboto", sans-serif' }}>
-          <Box>
-            My New Profile Card
-            <img src={cardemoji} alt="card_emoji" style={{height:20, width:20, marginLeft:10,}} />
-          </Box>
-          <Box>
-            <IconButton onClick={handleClose}>
+      {/* Modal */}
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="create-profile-modal"
+        aria-describedby="create-profile-description"
+      >
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: 400,
+            bgcolor: 'background.paper',
+            boxShadow: 24,
+            padding: 1,
+            borderRadius: 2,
+            maxHeight: '80vh', // Set max height for the modal
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+          {/* Fixed Header */}
+          <Box
+            sx={{
+              position: 'sticky',
+              top: 0,
+              bgcolor: 'background.paper',
+              zIndex: 1,
+              padding: 2,
+              borderBottom: '1px solid rgb(247, 240, 240)',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              height: 50,
+              borderRadius: '0px',
+            }}
+          >
+            <Typography variant="h6" fontWeight='bold' color='rgb(247, 50, 50)' >My New Profile</Typography>
+            <IconButton onClick={handleClose} sx={{ color: 'rgb(110, 103, 103)' }}>
               <CloseIcon />
             </IconButton>
           </Box>
-        </DialogTitle>
-        <form onSubmit={handleSubmit}>
-          <DialogContent>
-            {/* Full Name and Role (Same Row) */}
-            <div style={{ display: "flex", gap: "16px", marginBottom: "16px" }}>
-              <TextField
-                label="Full Name"
-                name="name"
-                placeholder="John Doe"
-                fullWidth
-                value={formData.name}
-                onChange={handleChange}
-                sx={{ fontFamily: '"Roboto", sans-serif' }}
-              />
-              <TextField
-                label="Role"
-                name="role"
-                placeholder="Software Developer"
-                fullWidth
-                value={formData.role}
-                onChange={handleChange}
-                sx={{ fontFamily: '"Roboto", sans-serif' }}
-              />
-            </div>
 
-            {/* Description */}
+          {/* Scrollable Content */}
+          <Box
+            sx={{
+              padding: 3,
+              overflowY: 'auto', // Enable scrolling for the content
+              flex: 1, // Allow the content area to grow and scroll
+              // Styles for the scrollbar
+              "&::-webkit-scrollbar": { width: {xs: "0px", sm:"7px"} },  // no scrollbar in xs screen size
+              "&::-webkit-scrollbar-thumb": { backgroundColor: "#FF6961", borderRadius: "10px", },
+              "&::-webkit-scrollbar-thumb:hover": { backgroundColor: "#636363" },
+              "&::-webkit-scrollbar-track": { backgroundColor: "#fff", borderRadius: "10px" },
+
+            }}
+          >
+            {/* Name and Role in the same row */}
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <TextField
+                  label="Name"
+                  variant="outlined"
+                  fullWidth
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  label="Role"
+                  variant="outlined"
+                  fullWidth
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                />
+              </Grid>
+            </Grid>
+
+            {/* Description input */}
             <TextField
               label="Description"
-              name="description"
-              placeholder="He is a Software Developer who loves to code and build things"
-              multiline
-              rows={3}
+              variant="outlined"
               fullWidth
-              value={formData.description}
-              onChange={handleChange}
-              sx={{
-                marginBottom: "16px",
-                fontFamily: '"Roboto", sans-serif',
-              }}
+              multiline
+              rows={4}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              sx={{ marginTop: 2, }}
             />
 
-            {/* Gender Selection */}
-            <Box sx={{ marginBottom: "16px", fontFamily: '"Roboto", sans-serif' }}>
-              <FormLabel component="legend" >Gender</FormLabel>
+            {/* Gender Radio Buttons */}
+            <FormControl component="fieldset" sx={{ marginTop: 2 }}>
+              <Typography variant="body1" gutterBottom>
+                Gender
+              </Typography>
               <RadioGroup
-                name="gender"
-                value={formData.gender}
-                onChange={handleChange}
-                sx={{ display: "flex", flexDirection: "row", gap: "16px" }}
+                row
+                value={gender}
+                onChange={(e) => setGender(e.target.value)}
               >
                 <FormControlLabel value="Male" control={<Radio />} label="Male" />
                 <FormControlLabel value="Female" control={<Radio />} label="Female" />
               </RadioGroup>
+            </FormControl>
+
+            {/* Social Links input */}
+            <TextField
+              label="Gmail URL"
+              variant="outlined"
+              fullWidth
+              value={socialLinks.gmail}
+              onChange={(e) => setSocialLinks({ ...socialLinks, gmail: e.target.value })}
+              sx={{ marginTop: 2 }}
+            />
+            <TextField
+              label="LinkedIn URL"
+              variant="outlined"
+              fullWidth
+              value={socialLinks.linkedin}
+              onChange={(e) => setSocialLinks({ ...socialLinks, linkedin: e.target.value })}
+              sx={{ marginTop: 1 }}
+            />
+            <TextField
+              label="Twitter URL"
+              variant="outlined"
+              fullWidth
+              value={socialLinks.twitter}
+              onChange={(e) => setSocialLinks({ ...socialLinks, twitter: e.target.value })}
+              sx={{ marginTop: 1 }}
+            />
+            <TextField
+              label="Facebook URL"
+              variant="outlined"
+              fullWidth
+              value={socialLinks.facebook}
+              onChange={(e) => setSocialLinks({ ...socialLinks, facebook: e.target.value })}
+              sx={{ marginTop: 1 }}
+            />
+
+            {/* Categories input */}
+            <Box sx={{ display: 'flex', gap: 2, alignItems: 'center', marginTop: 2 }}>
+              {/* Category Buttons */}
+              {['Work', 'Personal', 'Business', 'Friends'].map((category) => (
+                <Button
+                  key={category}
+                  variant={selectedCategories.includes(category) ? 'contained' : 'outlined'}
+                  onClick={() => handleCategoryClick(category)}
+                  sx={{
+                    width: '30%',
+                    borderRadius: '16px', // Add border radius
+                    borderColor: 'rgb(233, 232, 232)',
+                    textTransform: 'capitalize', // Capitalize only the first letter
+                    backgroundColor: selectedCategories.includes(category) ? '#f53838' : 'transparent',
+                    color: selectedCategories.includes(category) ? '#fff' : 'inherit',
+                    '&:hover': {
+                      backgroundColor: selectedCategories.includes(category) ? '#d42f2f' : '#f0f0f0',
+                    },
+                  }}
+                >
+                  {category}
+                </Button>
+              ))}
             </Box>
 
-            {/* Social Links */}
-            {Object.keys(formData.socialLinks).map((platform) => (
-              <TextField
-                key={platform}
-                label={`${platform.charAt(0).toUpperCase() + platform.slice(1)} URL`}
-                fullWidth
-                value={formData.socialLinks[platform]}
-                onChange={(e) => handleSocialLinkChange(platform, e.target.value)}
-                sx={{ marginBottom: "8px", fontFamily: '"Roboto", sans-serif' }}
-              />
-            ))}
-
-            {/* Add Categories Section */}
-            <Box sx={{ marginTop: "16px", marginBottom: "16px", fontFamily: '"Roboto", sans-serif' }}>
-              <Box sx={{ fontWeight: "bold", marginBottom: "8px" }}>Add Categories</Box>
-              <Box sx={{ display: "flex", gap: "10px", marginBottom: "16px" }}>
-                {["Work", "Personal", "Business", "Friends"].map((category) => (
-                  <Button
-                    key={category}
-                    variant="outlined"
-                    color={formData.categories.includes(category) ? "error" : "default"}
-                    onClick={() => toggleCategory(category)}
-                    sx={{
-                      borderColor: formData.categories.includes(category) ? "red" : "lightgrey",
-                      backgroundColor: formData.categories.includes(category) ? "red" : "transparent",
-                      color: formData.categories.includes(category) ? "white" : "black",
-                      borderRadius: "20px",
-                      fontFamily: '"Roboto", sans-serif',
-                      "&:hover": {
-                        borderColor: formData.categories.includes(category) ? "transparent" : "grey",
-                        backgroundColor: formData.categories.includes(category) ? "#eb2b21" : "#D3D3D3",
-                      },
-                    }}
-                  >
-                    {category}
-                  </Button>
-                ))}
-              </Box>
-            </Box>
-
-            {/* Selected Categories Box */}
+            {/* Display Box */}
             <Box
               sx={{
-                padding: "10px",
-                border: "1px solid #ddd",
-                borderRadius: "5px",
-                backgroundColor: "#f9f9f9",
-                marginBottom: "16px",
-                fontFamily: '"Roboto", sans-serif',
+                marginTop: 2,
+                padding: 2,
+                border: '1px solid #ccc',
+                borderRadius: 1,
+                minHeight: 60,
+                display: 'flex',
+                alignItems: 'center',
+                flexWrap: 'wrap',
+                gap: 1,
+                bgcolor: 'rgb(245, 243, 243)',
               }}
             >
-              <Box sx={{ fontWeight: "bold", marginBottom: "8px", color: "grey" }}>Selected Categories</Box>
-              {formData.categories.length === 0 ? (
-                <Box sx={{ color: "grey" }}>No categories selected</Box>
+              {selectedCategories.length > 0 ? (
+                selectedCategories.map((category, index) => (
+                  <Chip
+                    key={index}
+                    label={category}
+                    onDelete={() => handleRemoveCategory(category)}
+                    sx={{ backgroundColor: '#f53838', color: '#fff', }}
+                  />
+                ))
               ) : (
-                <Box>{formData.categories.join(", ")}</Box>
+                <Typography variant="body1" color="grey" fontWeight='bold' >
+                  No Categories Selected
+                </Typography>
               )}
             </Box>
-          </DialogContent>
 
-          <DialogActions>
-            <Button onClick={handleClose} color="secondary" sx={{ fontFamily: '"Roboto", sans-serif' }}>
-              Cancel
-            </Button>
-            <Button
-              type="submit"
-              sx={{
-                backgroundColor: "#ff0000",
-                "&:hover": { backgroundColor: "#c00000" },
-                fontFamily: '"Roboto", sans-serif',
-              }}
-              variant="contained"
-            >
-              Submit
-            </Button>
-          </DialogActions>
-        </form>
-      </Dialog>
+            {/* Buttons: Submit and Cancel */}
+            <Box sx={{ display: 'flex', gap: 2, marginTop: 3, justifyContent: 'flex-end' }}>
+              <Button
+                variant="text"
+                color="secondary"
+                onClick={handleClose}
+                sx={{ width: '30%', borderRadius: '10px', backgroundColor:'rgb(250, 250, 250)', }}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="contained"
+                onClick={handleSubmit}
+                sx={{ width: '30%', backgroundColor: 'rgb(247, 50, 50)', borderRadius: '10px' }}
+              >
+                Submit
+              </Button>
+            </Box>
+          </Box>
+        </Box>
+      </Modal>
+      
+      {/* Snackbar for success and error */}
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={() => setOpenSnackbar(false)}
+      >
+        <Alert
+          onClose={() => setOpenSnackbar(false)}
+          severity={snackbarMessage.includes('successfully') ? 'success' : 'error'}
+          sx={{width: '100%'}}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </>
   );
 };

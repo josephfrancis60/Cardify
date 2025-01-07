@@ -30,7 +30,7 @@ def create_profile():
     else:
         img_url = None
     
-    social_links = data.get("social_links", {})  # defaults to an empty list
+    social_links = data.get("socialLinks", {})  # defaults to an empty list
     categories = data.get("categories", [])  # defaults to an empty list
 
     # Validation: muat enter these fields
@@ -50,7 +50,7 @@ def create_profile():
         db.session.rollback()
         return jsonify({"error": "Failed to create profile", "details":str(e)}), 500
     
-    return jsonify({"message": "Profile created successfully"}), 201
+    return jsonify(new_profile.to_json()), 201
 
 
 # 3. Update a profile
