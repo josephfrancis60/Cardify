@@ -10,7 +10,7 @@ class Profile(db.Model):
     img_url = db.Column(db.String(200), unique=False, nullable=True)
     social_links = db.Column(JSON, default={
         "gmail": "", "linkedin": "", "twitter": "", "facebook": ""
-    }, unique=True)   # stores upto 4 links
+    }, unique=False)   # stores upto 4 links
     categories = db.Column(db.PickleType, default=[])    # stores categories as a list
 
 

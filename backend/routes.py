@@ -1,5 +1,4 @@
 from flask import request, jsonify
-from sqlalchemy.exc import IntegrityError  # for error handling
 from app import app, db
 from models import Profile
 
@@ -35,7 +34,7 @@ def create_profile():
     categories = data.get("categories", [])  # defaults to an empty list
 
     # Validation: muat enter these fields
-    required_fields = ["name", "role", "gender"]
+    required_fields = ["name", "role", "description", "gender"]
     for field in required_fields:
         if field not in data:
             return jsonify({"error": f'Missing required field: {field}'}), 400
@@ -47,9 +46,6 @@ def create_profile():
     try:
         db.session.add(new_profile)
         db.session.commit()
-    except IntegrityError:   # error handling for unique social link
-        db.session.rollback()
-        return jsonify({"error": "The provided social link already exists. Please use a unique social link"}), 400
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": "Failed to create profile", "details":str(e)}), 500
