@@ -148,6 +148,7 @@ const Profilecard = ({ name, role, image, description, socialLinks, categories }
           color="error" 
           aria-label="delete"
           sx={{ width: 30, height: 30, }}  // Set smaller size for the delete button
+          onClick={() => alert("deleted profile")}
         >
           <img src={deleteicon} alt='delete_icon' style={{width:20, height:20}} />   
           {/*<DeleteOutlineRoundedIcon sx={{ color: '#ed7632', fontSize: '20px' }} /> */}
