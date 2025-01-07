@@ -216,7 +216,7 @@ const CreateProfileModal = ({ setUsers }) => {
               variant="outlined"
               fullWidth
               multiline
-              rows={4}
+              rows={2}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               sx={{ marginTop: 2, }}
