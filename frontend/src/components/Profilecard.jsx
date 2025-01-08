@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardContent, Typography, Box, Avatar, IconButton, Chip, hexToRgb } from '@mui/material';
+import { Card, CardContent, Typography, Box, Avatar, IconButton, Chip, } from '@mui/material';
 import EditProfileModal from './EditProfileModal';
 import deleteicon from '../assets/icons/delete.png'; // delete icon
 import gmailicon from '../assets/icons/gmail.png'; // gmail icon
@@ -7,7 +7,7 @@ import linkedinicon from '../assets/icons/linkedin.png'; // linkedin icon
 import twittericon from '../assets/icons/twitter.png'; // twitter icon
 import facebookicon from '../assets/icons/facebook.png'; // facebook icon
 
-const Profilecard = ({ name, role, image, description, socialLinks, categories }) => {
+const Profilecard = ({ id, name, role, image, description, socialLinks, categories, deleteProfile }) => {
   return (
     <Card 
       sx={{ 
@@ -148,7 +148,7 @@ const Profilecard = ({ name, role, image, description, socialLinks, categories }
           color="error" 
           aria-label="delete"
           sx={{ width: 30, height: 30, }}  // Set smaller size for the delete button
-          onClick={() => alert("deleted profile")}
+          onClick={() => deleteProfile(id)}   // call deleteProfile with profile ID
         >
           <img src={deleteicon} alt='delete_icon' style={{width:20, height:20}} />   
           {/*<DeleteOutlineRoundedIcon sx={{ color: '#ed7632', fontSize: '20px' }} /> */}

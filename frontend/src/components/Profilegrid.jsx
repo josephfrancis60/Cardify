@@ -2,11 +2,37 @@ import React, { useEffect, useState } from 'react';
 import Grid from '@mui/material/Grid2';
 import Profilecard from './Profilecard';
 // import mockUsers from '../Mockdata';
-import { Box, CircularProgress, Typography } from '@mui/material';
+import { Box, CircularProgress, Snackbar, Alert, Typography } from '@mui/material';
 import { BASE_URL } from '../App';
 
 const Profilegrid = ({selectedCategory, users, setUsers}) => {
   const [isLoading, setLoading] = useState(true);
+
+  const [openSnackbar, setOpenSnackbar] = useState(false);  // snackbar visibility
+  const [snackbarMessage, setSnackbarMessage] = useState('');  // Snackbar message 
+
+  // function to handle delete profile
+  const deleteProfile = async (id) => {
+    try {
+      const res = await fetch(`${BASE_URL}/profiles/${id}`, {
+        method: "DELETE"
+      });
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.error || "Failed to delete profile");
+      }
+      // filter out the deleted profile from the 'users' state
+      setUsers(users.filter((user) => user.id !== id));
+      console.log(`profile deleted, ID: ${id}`)
+      setSnackbarMessage('Profile deleted successfully');
+      setOpenSnackbar(true);
+    }
+    catch (error) {
+      console.error("Error deleting profile", error);
+      setSnackbarMessage('Failed to delete profile');
+      setOpenSnackbar(true);
+    }
+  };
 
   useEffect(() => {
     const getUsers = async () => {
@@ -69,12 +95,14 @@ const Profilegrid = ({selectedCategory, users, setUsers}) => {
             key={user.id}
           >
             <Profilecard
+              id={user.id}
               name={user.name}
               role={user.role}
               image={user.imgUrl}
               description={user.description}
               socialLinks={user.socialLinks}
               categories={user.categories}
+              deleteProfile={deleteProfile}  // pass the delete function
             />
           </Grid>
         ))}
@@ -104,6 +132,21 @@ const Profilegrid = ({selectedCategory, users, setUsers}) => {
           </Typography>
         </Box>
       )}
+
+      {/* snackbar  */}
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={2000}
+        onClose={() => setOpenSnackbar(false)}
+      >
+        <Alert
+          onClose={() => setOpenSnackbar(false)}
+          severity={snackbarMessage.includes('successfully') ? 'success' : 'error'}
+          sx={{width: '100%'}}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
 
     </Box>
   );
