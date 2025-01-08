@@ -212,7 +212,9 @@ const CreateProfileModal = ({ setUsers }) => {
               <Grid item xs={6}>
                 <TextField
                   label="Name"
+                  placeholder='John Doe'
                   variant="outlined"
+                  color='secondary'
                   fullWidth
                   value={name}
                   onChange={(e) => setName(e.target.value)}
@@ -221,7 +223,9 @@ const CreateProfileModal = ({ setUsers }) => {
               <Grid item xs={6}>
                 <TextField
                   label="Role"
+                  placeholder='Analyst'
                   variant="outlined"
+                  color='secondary'
                   fullWidth
                   value={role}
                   onChange={(e) => setRole(e.target.value)}
@@ -232,7 +236,9 @@ const CreateProfileModal = ({ setUsers }) => {
             {/* Description input */}
             <TextField
               label="Description"
+              placeholder='Great Analytical skills...'
               variant="outlined"
+              color='secondary'
               fullWidth
               multiline
               rows={2}
@@ -259,6 +265,7 @@ const CreateProfileModal = ({ setUsers }) => {
             {/* Social Links input */}
             <TextField
               label="Gmail URL"
+              placeholder='mailto:johndoe@example.com'
               variant="outlined"
               fullWidth
               value={socialLinks.gmail}
@@ -267,6 +274,7 @@ const CreateProfileModal = ({ setUsers }) => {
             />
             <TextField
               label="LinkedIn URL"
+              placeholder='www.linkedin.com/in/johndoe'
               variant="outlined"
               fullWidth
               value={socialLinks.linkedin}
@@ -275,6 +283,7 @@ const CreateProfileModal = ({ setUsers }) => {
             />
             <TextField
               label="Twitter URL"
+              placeholder='twitter.com/johndoe'
               variant="outlined"
               fullWidth
               value={socialLinks.twitter}
@@ -283,6 +292,7 @@ const CreateProfileModal = ({ setUsers }) => {
             />
             <TextField
               label="Facebook URL"
+              placeholder='facebook.com/johndoe'
               variant="outlined"
               fullWidth
               value={socialLinks.facebook}
