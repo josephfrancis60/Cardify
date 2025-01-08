@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Button, Modal, Box, TextField, Typography, IconButton, Chip, FormControl, FormControlLabel, Radio, RadioGroup } from '@mui/material';
-import Grid from '@mui/material/Grid2';
+import { Grid, Button, Modal, Box, TextField, Typography, IconButton, Chip, FormControl, FormControlLabel, Radio, RadioGroup } from '@mui/material';
+// import Grid from '@mui/material/Grid2';
 import AddToPhotosOutlinedIcon from '@mui/icons-material/AddToPhotosOutlined';
 import CloseIcon from '@mui/icons-material/Close'; // Close icon for the modal
 import { BASE_URL } from '../App'; // Replace with your actual base URL
