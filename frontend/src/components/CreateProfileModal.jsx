@@ -18,7 +18,7 @@ const CreateProfileModal = ({ setUsers }) => {
     facebook: '',
   });
   const [selectedCategories, setSelectedCategories] = useState([]);
-  const [gender, setGender] = useState('male'); // State for gender
+  const [gender, setGender] = useState(''); // State for gender
 
   // add (https://) prefix to socialLinks if not already present
   const formattedSocialLinks = Object.fromEntries(
@@ -97,7 +97,7 @@ const CreateProfileModal = ({ setUsers }) => {
 
       } else {
         console.error('Error creating profile:', data.error);                //TODO  : proper toast msg for missing / required fields
-        setSnackbarMessage(error.message);
+        setSnackbarMessage(data.error);
         setOpenSnackbar(true);
       }
     } catch (error) {
