@@ -96,7 +96,7 @@ const CreateProfileModal = ({ setUsers }) => {
         });
 
       } else {
-        console.error('Error creating profile:', data.error);                //TODO  : proper toast msg for missing / required fields
+        console.error('Error creating profile:', data.error);  
         setSnackbarMessage(data.error);
         setOpenSnackbar(true);
       }
@@ -106,6 +106,24 @@ const CreateProfileModal = ({ setUsers }) => {
       setOpenSnackbar(true);
     }
   };
+
+  // Clear inputs when cancel button
+  const handleCancel = () => {
+    setName('');
+    setRole('');
+    setDescription('');
+    setGender('');
+    setSelectedCategories([]);
+    setSocialLinks({
+      gmail: '',
+      linkedin: '',
+      twitter: '',
+      facebook: '',
+    });
+    handleClose();
+    setSnackbarMessage("Inputs are cleared if any");
+    setOpenSnackbar(true);
+  }
 
   return (
     <>
@@ -133,7 +151,7 @@ const CreateProfileModal = ({ setUsers }) => {
       {/* Modal */}
       <Modal
         open={open}
-        onClose={handleClose}
+        onClose={handleClose}  // closes modal without clearing inputs if any
         aria-labelledby="create-profile-modal"
         aria-describedby="create-profile-description"
       >
@@ -285,10 +303,13 @@ const CreateProfileModal = ({ setUsers }) => {
                     borderRadius: '16px', // Add border radius
                     borderColor: 'rgb(233, 232, 232)',
                     textTransform: 'capitalize', // Capitalize only the first letter
-                    backgroundColor: selectedCategories.includes(category) ? '#f53838' : 'transparent',
+                    backgroundColor: selectedCategories.includes(category) ? '#f24646' : 'transparent',
                     color: selectedCategories.includes(category) ? '#fff' : 'inherit',
                     '&:hover': {
                       backgroundColor: selectedCategories.includes(category) ? '#d42f2f' : '#f0f0f0',
+                    },
+                    '&:focus': {
+                      backgroundColor: selectedCategories.includes(category) ? '#f24646' : 'transparent',
                     },
                   }}
                 >
@@ -301,8 +322,9 @@ const CreateProfileModal = ({ setUsers }) => {
             <Box
               sx={{
                 marginTop: 2,
-                padding: 2,
-                border: '1px solid #ccc',
+                padding: 1,
+                pl: 2,
+                border: '1px solid #fff',
                 borderRadius: 1,
                 minHeight: 60,
                 display: 'flex',
@@ -333,8 +355,11 @@ const CreateProfileModal = ({ setUsers }) => {
               <Button
                 variant="text"
                 color="secondary"
-                onClick={handleClose}
-                sx={{ width: '30%', borderRadius: '10px', backgroundColor:'rgb(250, 250, 250)', }}
+                onClick={handleCancel}
+                sx={{ width: '30%', borderRadius: '10px', backgroundColor:'rgb(243, 238, 238)',
+                  '&:hover': {backgroundColor:'rgb(230, 230, 230)',},
+                  '&:focus': {backgroundColor:'rgb(235, 235, 235)',},
+                 }}
               >
                 Cancel
               </Button>
@@ -353,12 +378,18 @@ const CreateProfileModal = ({ setUsers }) => {
       {/* Snackbar for success and error */}
       <Snackbar
         open={openSnackbar}
-        autoHideDuration={6000}
+        autoHideDuration={4000}
         onClose={() => setOpenSnackbar(false)}
       >
         <Alert
           onClose={() => setOpenSnackbar(false)}
-          severity={snackbarMessage.includes('successfully') ? 'success' : 'error'}
+          severity={
+            snackbarMessage.includes('successfully')
+              ? 'success'
+              : snackbarMessage.includes('cleared')
+              ? 'info'
+              : 'error'
+          }
           sx={{width: '100%'}}
         >
           {snackbarMessage}
