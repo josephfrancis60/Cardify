@@ -82,7 +82,7 @@ const CreateProfileModal = ({ setUsers }) => {
         setOpenSnackbar(true);
         handleClose(); // Close modal after successful submission
 
-        // clear imputs after successfull submission
+        // clear imputs after successfull submission for new creation
         setName('');
         setRole('');
         setDescription('');
