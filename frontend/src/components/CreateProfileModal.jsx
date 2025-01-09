@@ -61,7 +61,7 @@ const CreateProfileModal = ({ setUsers }) => {
       socialLinks: formattedSocialLinks,
       categories: selectedCategories,
     };
-    console.log('from client', profileData);  //from client 
+    console.log('Create: from client', profileData);  //from client 
 
     try {
       const response = await fetch(`${BASE_URL}/profiles`, {
@@ -73,7 +73,7 @@ const CreateProfileModal = ({ setUsers }) => {
       });
 
       const data = await response.json();
-      console.log('from server', data);  // response from api server
+      console.log('Create: from server', data);  // response from api server
       
       if (response.ok) {
         setUsers((prevUsers) => [...prevUsers, data]); // Add new profile to the existing users
