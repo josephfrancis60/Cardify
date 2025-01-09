@@ -226,7 +226,7 @@ const EditProfileModal = () => {
 
 
 
-            {/* Buttons: Edit and Cancel */}
+            {/* Buttons: Submit and Cancel */}
             <Box sx={{ display: 'flex', gap: 2, marginTop: 3, justifyContent: 'flex-end' }}>
               <Button
                 variant="text"
@@ -243,7 +243,7 @@ const EditProfileModal = () => {
                 variant="contained"
                 sx={{ width: '30%', backgroundColor: 'rgb(247, 50, 50)', borderRadius: '10px' }}
               >
-                Edit
+                Submit
               </Button>
             </Box>
           </Box>
