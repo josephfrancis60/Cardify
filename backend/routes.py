@@ -62,6 +62,14 @@ def update_profile(id):
             return jsonify({"error": "Profile not found"}), 400
         
         data = request.json
+
+        # validation for required fields while editing
+        required_fields = ["name", "role", "description"]
+        for field in required_fields:
+            if not data.get(field):
+              return jsonify({"error": f'Missing required field: {field}'}), 400
+
+        # update fields if valid
         profile.name = data.get("name", profile.name)
         profile.role = data.get("role", profile.role)
         profile.description = data.get("description", profile.description)
