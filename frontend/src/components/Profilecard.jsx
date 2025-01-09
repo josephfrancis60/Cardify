@@ -28,7 +28,7 @@ const Profilecard = ({ id, name, role, image, description, socialLinks, categori
         <Avatar
           src={image}
           alt={name}
-          sx={{ width: 60, height: 60 }}
+          sx={{ width: 60, height: 60, border: '2px solid rgb(255, 44, 44)' }}
         />
         
         {/* Profile Name and Role */}
