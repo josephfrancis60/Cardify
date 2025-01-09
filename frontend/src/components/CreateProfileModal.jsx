@@ -369,6 +369,8 @@ const CreateProfileModal = ({ setUsers }) => {
                 sx={{ width: '30%', borderRadius: '10px', backgroundColor:'rgb(243, 238, 238)',
                   '&:hover': {backgroundColor:'rgb(230, 230, 230)',},
                   '&:focus': {backgroundColor:'rgb(235, 235, 235)',},
+                  textTransform: 'capitalize',
+                  fontWeight: 'bold',
                  }}
               >
                 Cancel
@@ -376,7 +378,7 @@ const CreateProfileModal = ({ setUsers }) => {
               <Button
                 variant="contained"
                 onClick={handleSubmit}
-                sx={{ width: '30%', backgroundColor: 'rgb(247, 50, 50)', borderRadius: '10px' }}
+                sx={{ width: '30%', backgroundColor: 'rgb(247, 50, 50)', borderRadius: '10px', textTransform: "capitalize", fontWeight: 'bold' }}
               >
                 Submit
               </Button>
