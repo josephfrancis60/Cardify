@@ -70,7 +70,7 @@ def update_profile(id):
         profile.categories = data.get("categories", profile.categories)
 
         db.session.commit()
-        return jsonify({"message": "Profile updated successfully"}), 200     # return jsonify(profile.to_json()), 200
+        return jsonify(profile.to_json()), 200              # return jsonify({"message": "Profile updated successfully"}), 200     
     
     except Exception as e:
         db.session.rollback()
