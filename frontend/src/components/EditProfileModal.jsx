@@ -90,6 +90,7 @@ const EditProfileModal = ({ user, setUsers }) => {
       console.log('Edit: from server', updatedProfile); // from server
       // Update user state
       setUsers((prevUsers) => prevUsers.map((user) => (user.id === updatedProfile.id ? updatedProfile : user)));
+      console.log(`Profile Edited, ID: ${updatedProfile.id}`);
       // TOAST
       setSnackbarMessage('Profile edited successfully!');
       setOpenSnackbar(true);

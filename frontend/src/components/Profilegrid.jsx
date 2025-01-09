@@ -25,7 +25,7 @@ const Profilegrid = ({selectedCategory, users, setUsers}) => {
       }
       // filter out the deleted profile from the 'users' state
       setUsers(users.filter((user) => user.id !== id));
-      console.log(`profile deleted, ID: ${id}`)
+      console.log(`Profile Deleted, ID: ${id}`)
       setSnackbarMessage('Profile deleted successfully');
       setOpenSnackbar(true);
     }
