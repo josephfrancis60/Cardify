@@ -7,7 +7,7 @@ import linkedinicon from '../assets/icons/linkedin.png'; // linkedin icon
 import twittericon from '../assets/icons/twitter.png'; // twitter icon
 import facebookicon from '../assets/icons/facebook.png'; // facebook icon
 
-const Profilecard = ({ id, name, role, image, description, socialLinks, categories, deleteProfile }) => {
+const Profilecard = ({ id, name, role, image, description, socialLinks, categories, deleteProfile, }) => {
   return (
     <Card 
       sx={{ 
