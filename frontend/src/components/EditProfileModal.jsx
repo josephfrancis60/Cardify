@@ -1,20 +1,104 @@
 import React, { useState } from "react";
-import { Box, Button, Grid, Typography, IconButton, Modal, TextField, Chip } from "@mui/material";
+import { Box, Button, Grid, Typography, IconButton, Modal, TextField, Chip, Snackbar, Alert } from "@mui/material";
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import CloseIcon from '@mui/icons-material/Close'; // Close icon for the modal
+import { BASE_URL } from "../App";
 
 
 
-const EditProfileModal = () => {
+const EditProfileModal = ({ user, setUsers }) => {
 
   const [open, setOpen] = useState(false); // Modal open state
+  const [profileData, setProfileData] = useState({
+    ...user,
+    socialLinks: user.socialLinks || 
+    {
+      gmail: "",
+      linkedin: "",
+      twitter: "",
+      facebook: "",
+    },
+  });  // profile data state with social links
 
-  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState(user.categories || []);  // initial categories
+
+  const [initialProfileData, setInitialProfileData] = useState(null);  // initial profile data
+  const [initialCategories, setInitialCategories] = useState([]);  // initial categories 
+
+  const [openSnackbar, setOpenSnackbar] = useState(false);  // snackbar visibility
+  const [snackbarMessage, setSnackbarMessage] = useState('');  // Snackbar message
   
-
-  const handleOpen = () => setOpen(true); // open the Modal
+  const handleOpen = () => {
+    setOpen(true);  // open the Modal
+    setInitialProfileData({
+      ...user,
+      socialLinks: user.socialLinks || 
+      {
+        gmail: "",
+        linkedin: "",
+        twitter: "",
+        facebook: "",
+      },
+    });
+    setInitialCategories(user.categories || []);
+  }; 
   const handleClose = () => setOpen(false);  // close the Modal
 
+  // function to reset profile data to initial state
+  const handleCancel = () => {
+    setProfileData(initialProfileData);  // reset profileData
+    setSelectedCategories(initialCategories);  // reset categories
+  }
+
+  // Handle saving profile data
+  const handleSave = async (event) => {
+    event.preventDefault(); // prevent default behaviour of browser (refresh)
+  
+    console.log('edit: from client', profileData); // from client
+    try {
+      const res = await fetch(`${BASE_URL}/profiles/${profileData.id}`, {
+        method: "PATCH",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...profileData, // include all profile data, 
+          social_links: profileData.socialLinks,  // social_links matching as the backend key
+          categories: selectedCategories, // include updated categories
+        }),
+      });
+  
+    
+      if (!res.ok) {
+        throw new Error('Failed to update profile');
+      }
+      const updatedProfile = await res.json(); // get updated profile data form the response
+      console.log('Edit: from server', updatedProfile); // from server
+      // Update user state
+      setUsers((prevUsers) => prevUsers.map((user) => (user.id === updatedProfile.id ? updatedProfile : user)));
+      // TOAST
+      setSnackbarMessage('Profile edited successfully!');
+      setOpenSnackbar(true);
+      handleClose(); // close modal
+    } catch (error) {
+      console.error('error updating profile', error);
+      // TOAST
+      setSnackbarMessage('Failed to edit profile!');
+      setOpenSnackbar(true);
+    }
+  };
+
+
+  const handleSocialLinkChange = (key, value) => {
+    setProfileData((prev) => ({
+      ...prev,
+      socialLinks: {
+        ...prev.socialLinks,
+        [key]: value,
+      },
+    }));
+  };
+  
   // Handle category button click
   const handleCategoryClick = (category) => {
     if (!selectedCategories.includes(category)) {
@@ -106,6 +190,8 @@ const EditProfileModal = () => {
                 <TextField
                   label="Name"
                   placeholder='John Doe'
+                  value={profileData.name}
+                  onChange={(e) => setProfileData((prev) => ({ ...prev, name: e.target.value}))}
                   variant="outlined"
                   color='secondary'
                   fullWidth
@@ -115,6 +201,8 @@ const EditProfileModal = () => {
                 <TextField
                   label="Role"
                   placeholder='Analyst'
+                  value={profileData.role}
+                  onChange={(e) => setProfileData((prev) => ({ ...prev, role: e.target.value}))}
                   variant="outlined"
                   color='secondary'
                   fullWidth
@@ -126,6 +214,8 @@ const EditProfileModal = () => {
             <TextField
               label="Description"
               placeholder='Great Analytical skills...'
+              value={profileData.description}
+              onChange={(e) => setProfileData((prev) => ({ ...prev, description: e.target.value}))}
               variant="outlined"
               color='secondary'
               fullWidth
@@ -138,6 +228,8 @@ const EditProfileModal = () => {
             <TextField
               label="Gmail URL"
               placeholder='mailto:johndoe@example.com'
+              value={profileData.socialLinks.gmail || ""}
+              onChange={(e) => handleSocialLinkChange("gmail",e.target.value)}
               variant="outlined"
               fullWidth
               sx={{ marginTop: 4, }}
@@ -145,6 +237,8 @@ const EditProfileModal = () => {
             <TextField
               label="LinkedIn URL"
               placeholder='www.linkedin.com/in/johndoe'
+              value={profileData.socialLinks.linkedin || ""}
+              onChange={(e) => handleSocialLinkChange("linkedin",e.target.value)}
               variant="outlined"
               fullWidth
               sx={{ marginTop: 1, }}
@@ -152,6 +246,8 @@ const EditProfileModal = () => {
             <TextField
               label="Twitter URL"
               placeholder='twitter.com/johndoe'
+              value={profileData.socialLinks.twitter || ""}
+              onChange={(e) => handleSocialLinkChange("twitter",e.target.value)}
               variant="outlined"
               fullWidth
               sx={{ marginTop: 1 }}
@@ -159,6 +255,8 @@ const EditProfileModal = () => {
             <TextField
               label="Facebook URL"
               placeholder='facebook.com/johndoe'
+              value={profileData.socialLinks.facebook || ""}
+              onChange={(e) => handleSocialLinkChange("facebook",e.target.value)}
               variant="outlined"
               fullWidth
               sx={{ marginTop: 1 }}
@@ -231,25 +329,43 @@ const EditProfileModal = () => {
               <Button
                 variant="text"
                 color="secondary"
-                onClick={handleClose}
+                onClick={handleCancel}
                 sx={{ width: '30%', borderRadius: '10px', backgroundColor:'rgb(243, 238, 238)',
                   '&:hover': {backgroundColor:'rgb(230, 230, 230)',},
                   '&:focus': {backgroundColor:'rgb(235, 235, 235)',},
+                  textTransform: "capitalize",
+                  fontWeight: 'bold'
                  }}
               >
-                Cancel
+                Reset
               </Button>
               <Button
                 variant="contained"
-                sx={{ width: '30%', backgroundColor: 'rgb(247, 50, 50)', borderRadius: '10px' }}
+                onClick={handleSave}
+                sx={{ width: '30%', backgroundColor: 'rgb(247, 50, 50)', borderRadius: '10px', textTransform: 'capitalize', fontWeight: 'bold' }}
               >
-                Submit
+                Edit
               </Button>
             </Box>
           </Box>
         </Box>
       </Modal>
 
+
+      {/* snackbar  */}
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={2000}
+        onClose={() => setOpenSnackbar(false)}
+      >
+        <Alert
+          onClose={() => setOpenSnackbar(false)}
+          severity={snackbarMessage.includes('successfully') ? 'success' : 'error'}
+          sx={{width: '100%'}}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
       
     </>
   );
