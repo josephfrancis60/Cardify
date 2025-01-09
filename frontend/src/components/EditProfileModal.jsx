@@ -53,6 +53,19 @@ const EditProfileModal = ({ user, setUsers }) => {
   // Handle saving profile data
   const handleSave = async (event) => {
     event.preventDefault(); // prevent default behaviour of browser (refresh)
+
+    // add 'https://' prefix to only to non-empty social links if not already present
+    const updatedSocialLinks = Object.fromEntries(
+      Object.entries(profileData.socialLinks)
+        .filter(([key, value]) => value && value.trim() !== "") // Exclude empty values
+        .map(([key, value]) => [
+          key,
+          value.startsWith("http://") || value.startsWith("https://")
+            ? value
+            : `https://${value}`,
+        ])
+    );
+  
   
     console.log('edit: from client', profileData); // from client
     try {
@@ -63,14 +76,15 @@ const EditProfileModal = ({ user, setUsers }) => {
         },
         body: JSON.stringify({
           ...profileData, // include all profile data, 
-          social_links: profileData.socialLinks,  // social_links matching as the backend key
+          social_links: updatedSocialLinks,  // social_links matching as the backend key = sending updated social links 'https://' 
           categories: selectedCategories, // include updated categories
         }),
       });
   
     
       if (!res.ok) {
-        throw new Error('Failed to update profile');
+        const errorResponse = await res.json();
+        throw new Error(errorResponse.error || "Failed to edit profile");
       }
       const updatedProfile = await res.json(); // get updated profile data form the response
       console.log('Edit: from server', updatedProfile); // from server
@@ -80,10 +94,11 @@ const EditProfileModal = ({ user, setUsers }) => {
       setSnackbarMessage('Profile edited successfully!');
       setOpenSnackbar(true);
       handleClose(); // close modal
-    } catch (error) {
+    } 
+    catch (error) {
       console.error('error updating profile', error);
       // TOAST
-      setSnackbarMessage('Failed to edit profile!');
+      setSnackbarMessage(error.message);  // Display backend error msg
       setOpenSnackbar(true);
     }
   };
