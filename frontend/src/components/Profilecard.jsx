@@ -7,7 +7,7 @@ import linkedinicon from '../assets/icons/linkedin.png'; // linkedin icon
 import twittericon from '../assets/icons/twitter.png'; // twitter icon
 import facebookicon from '../assets/icons/facebook.png'; // facebook icon
 
-const Profilecard = ({ id, name, role, image, description, socialLinks, categories, deleteProfile, }) => {
+const Profilecard = ({ id, name, role, image, description, socialLinks, categories, deleteProfile, users, setUsers }) => {
   return (
     <Card 
       sx={{ 
@@ -141,7 +141,10 @@ const Profilecard = ({ id, name, role, image, description, socialLinks, categori
         }}
       >
         {/* edit button - Edit Porfile Modal */}
-        <EditProfileModal />
+        <EditProfileModal
+          user={users.find(user => user.id === id)}  // passing user data for editing
+          setUsers={setUsers}  // allow updating users
+        />
 
         {/* delete button */}
         <IconButton 

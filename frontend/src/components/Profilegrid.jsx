@@ -8,6 +8,8 @@ import { BASE_URL } from '../App';
 const Profilegrid = ({selectedCategory, users, setUsers}) => {
   const [isLoading, setLoading] = useState(true);
 
+  const [SelectedProfile, setSelectedProfile] = useState(null);  // state to treack profile data for editing
+
   const [openSnackbar, setOpenSnackbar] = useState(false);  // snackbar visibility
   const [snackbarMessage, setSnackbarMessage] = useState('');  // Snackbar message 
 
@@ -103,6 +105,8 @@ const Profilegrid = ({selectedCategory, users, setUsers}) => {
               socialLinks={user.socialLinks}
               categories={user.categories}
               deleteProfile={deleteProfile}  // pass the delete function
+              users={users}
+              setUsers={setUsers}  // pass setusers which has the profile data
             />
           </Grid>
         ))}
