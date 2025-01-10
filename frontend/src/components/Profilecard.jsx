@@ -1,5 +1,5 @@
-import React from 'react';
-import { Card, CardContent, Typography, Box, Avatar, IconButton, Chip, } from '@mui/material';
+import React, { useState } from 'react';
+import { Card, CardContent, Typography, Box, Avatar, IconButton, Chip, Dialog, DialogTitle, DialogContent, DialogActions, Button, } from '@mui/material';
 import EditProfileModal from './EditProfileModal';
 import deleteicon from '../assets/icons/delete.png'; // delete icon
 import gmailicon from '../assets/icons/gmail.png'; // gmail icon
@@ -8,6 +8,18 @@ import twittericon from '../assets/icons/twitter.png'; // twitter icon
 import facebookicon from '../assets/icons/facebook.png'; // facebook icon
 
 const Profilecard = ({ id, name, role, image, description, socialLinks, categories, deleteProfile, users, setUsers }) => {
+
+  const [openModal, setOpenModal] = useState(false);  // visibility of confirmation modal
+
+  const handleOpenModal = () => setOpenModal(true);  // open the modal
+  const handleCloseModal = () => setOpenModal(false);  // close the modal
+
+  // function to handle deleting the profile
+  const handleDeleteProfile = () => {
+    deleteProfile(id);  // call the deleteProfile function as a prop
+    setOpenModal(false);  // clode modal after deleting
+  };
+
   return (
     <Card 
       sx={{ 
@@ -151,12 +163,55 @@ const Profilecard = ({ id, name, role, image, description, socialLinks, categori
           color="error" 
           aria-label="delete"
           sx={{ width: 30, height: 30, }}  // Set smaller size for the delete button
-          onClick={() => deleteProfile(id)}   // call deleteProfile with profile ID               // for delete ask confirmation by other modal or dialog box
+          onClick={handleOpenModal}  // open the confirmation modal
         >
           <img src={deleteicon} alt='delete_icon' style={{width:20, height:20}} />   
           {/*<DeleteOutlineRoundedIcon sx={{ color: '#ed7632', fontSize: '20px' }} /> */}
         </IconButton>
       </Box>
+
+      {/* confirmation modal */}
+      <Dialog
+        open={openModal}
+        onClose={handleCloseModal}
+        aria-labelledby='confirmation-dialog-title'
+        sx={{
+          '& .MuiDialog-paper': {
+            borderRadius: '10px',
+            backgroundColor: 'rgb(240, 240, 240)',
+          }
+        }}
+      >
+        <DialogContent 
+          id='confirmation-dialog-title'
+          sx={{ fontFamily: 'sans-serif' }}
+        >
+          Are you sure you want to delete "{name}"?
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={handleCloseModal}
+            color='primary'
+            sx={{ borderRadius:'15px', backgroundColor:'transparent',
+              '&:hover': {backgroundColor:'rgb(220, 220, 220)',},
+              textTransform: 'capitalize',
+             }}
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={handleDeleteProfile}
+            color='error'
+            sx={{ borderRadius:'15px', backgroundColor:'transparent',
+              '&:hover': {backgroundColor:'rgb(255, 230, 230)',},
+              textTransform: 'capitalize',          
+             }}
+          >
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
+
     </Card>
   );
 };
