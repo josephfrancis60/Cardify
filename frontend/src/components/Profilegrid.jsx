@@ -25,7 +25,7 @@ const Profilegrid = ({selectedCategory, users, setUsers}) => {
       // filter out the deleted profile from the 'users' state
       setUsers(users.filter((user) => user.id !== id));
       console.log(`Profile Deleted, ID: ${id}`)
-      setSnackbarMessage('Profile deleted successfully');
+      setSnackbarMessage('Profile deleted');
       setOpenSnackbar(true);
     }
     catch (error) {
@@ -144,7 +144,7 @@ const Profilegrid = ({selectedCategory, users, setUsers}) => {
       >
         <Alert
           onClose={() => setOpenSnackbar(false)}
-          severity={snackbarMessage.includes('successfully') ? 'success' : 'error'}
+          severity={snackbarMessage.includes('deleted') ? 'success' : 'error'}
           sx={{width: '100%'}}
         >
           {snackbarMessage}
