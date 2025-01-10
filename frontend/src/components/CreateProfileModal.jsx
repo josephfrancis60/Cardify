@@ -121,7 +121,7 @@ const CreateProfileModal = ({ setUsers }) => {
       facebook: '',
     });
     handleClose();
-    setSnackbarMessage("Inputs are cleared if any");
+    setSnackbarMessage("All inputs have been cleared");
     setOpenSnackbar(true);
   }
 
