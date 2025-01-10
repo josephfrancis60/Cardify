@@ -211,6 +211,7 @@ const CreateProfileModal = ({ setUsers }) => {
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <TextField
+                  required
                   label="Name"
                   placeholder='John Doe'
                   variant="outlined"
@@ -222,6 +223,7 @@ const CreateProfileModal = ({ setUsers }) => {
               </Grid>
               <Grid item xs={6}>
                 <TextField
+                  required
                   label="Role"
                   placeholder='Analyst'
                   variant="outlined"
@@ -235,6 +237,7 @@ const CreateProfileModal = ({ setUsers }) => {
 
             {/* Description input */}
             <TextField
+              required
               label="Description"
               placeholder='Great Analytical skills...'
               variant="outlined"
@@ -250,7 +253,7 @@ const CreateProfileModal = ({ setUsers }) => {
             {/* Gender Radio Buttons */}
             <FormControl component="fieldset" sx={{ marginTop: 2 }}>
               <Typography variant="body1" gutterBottom>
-                Gender
+                Gender * 
               </Typography>
               <RadioGroup
                 row
