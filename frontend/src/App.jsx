@@ -16,7 +16,10 @@ function App() {
   return (
     <>
      <Layout 
-      navbarContent={<Navbar />}
+      navbarContent={<Navbar
+        setUsers = {setUsers}
+        selectedCategory = {selectedCategory}
+      />}
       sidebarContent={<Sidebar 
         selectedCategory = {selectedCategory} 
         setSelectedCategory = {setSelectedCategory} 

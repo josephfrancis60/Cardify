@@ -3,7 +3,7 @@ import { Box, Typography, Button } from "@mui/material";
 import Searchbar from "./Searchbar"; // Import the SearchBar component
 import cardifylogo from '../assets/icons/cardify_logo.png'; // logo img
 
-const Navbar = () => {
+const Navbar = ({ setUsers, selectedCategory }) => {
   return (
     <Box
       sx={{
@@ -30,7 +30,10 @@ const Navbar = () => {
 
       {/* Search Box */}
       <Box sx={{ width: "40%" }}> {/* Container for the search bar , adjust the width of searchbox  */} 
-        <Searchbar />
+        <Searchbar
+          setUsers={setUsers}
+          selectedCategory={selectedCategory}
+        />
       </Box>
 
 
