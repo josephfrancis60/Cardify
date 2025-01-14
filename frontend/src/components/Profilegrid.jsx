@@ -118,6 +118,7 @@ const Profilegrid = ({selectedCategory, users, setUsers}) => {
           display: 'flex', 
           justifyContent: 'center', 
           alignItems: 'center', 
+          height: 'calc(50vh - 20px)', // height of the spinner
         }}
         >
           <CircularProgress sx={{ color: 'rgb(255, 42, 42)' }} />
