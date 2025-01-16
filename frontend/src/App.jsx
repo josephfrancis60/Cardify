@@ -5,7 +5,7 @@ import Profilegrid from './components/Profilegrid'
 import Sidebar from './components/Sidebar'
 
 
-export const BASE_URL = "http://127.0.0.1:5000";
+export const BASE_URL = window.location.hostname === "localhost" ? "https://localhost:5000" : "https://cardify-b41a.onrender.com";
 
 function App() {
   const [users, setUsers] = useState([]);
