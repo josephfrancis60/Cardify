@@ -3,7 +3,12 @@
 
 Cardify is a full-stack web application designed to display and manage user profiles dynamically. Each profile is presented in an elegant, card-based layout, making profile management intuitive, organized, and visually appealing.  
 
----
+
+## Cardify Demo
+
+Deployed the Live Application of **Cardify** [here](https://cardify-b41a.onrender.com).
+
+<img src="https://github.com/user-attachments/assets/5ad22cde-5cbb-4c45-8b1b-5f5efd9bbda6" />
 
 ## 🔑 Key Features  
 - *Create, Edit, and Delete Profiles:* Add new profiles with details like name, role, description, category, and social media links.  
@@ -12,7 +17,7 @@ Cardify is a full-stack web application designed to display and manage user prof
 - *Responsive Design:* Enjoy seamless functionality across all devices, from desktop to mobile.  
 - *User-Friendly Interface:* Built with Material UI for an elegant and intuitive user experience.  
 
----
+
 
 ## 🛠 Technologies Used  
 
@@ -28,7 +33,7 @@ Cardify is a full-stack web application designed to display and manage user prof
 ### *Database:*  
 - SQLite  
 
----
+
 
 ## 📚 How It Works  
 
@@ -51,16 +56,14 @@ Cardify is a full-stack web application designed to display and manage user prof
 4. *Responsive Design:*  
    Optimized for both desktop and mobile devices to ensure a smooth experience.  
 
----
 
-## Cardify Demo
 
-<img src="https://github.com/user-attachments/assets/5ad22cde-5cbb-4c45-8b1b-5f5efd9bbda6" />
+
 
 ## 🎯 Outcome  
 Cardify simplifies profile management with its blend of functionality and aesthetics. It is ideal for organizing team details, social connections, or any profile-based data.  
 
----
+
 
 ## 🚀 Getting Started  
 
