@@ -1,4 +1,4 @@
-# Cardify  
+# Cardify - Reimagine how you connect
 🚀 *Dynamic Profile Management Web Application*  
 
 Cardify is a full-stack web application designed to display and manage user profiles dynamically. Each profile is presented in an elegant, card-based layout, making profile management intuitive, organized, and visually appealing.  
@@ -22,7 +22,7 @@ Cardify is a full-stack web application designed to display and manage user prof
 
 ### *Backend:*  
 - Flask  
-- SQLite  
+- SQLAlchemy 
 - Tested with Postman  
 
 ### *Database:*  
@@ -37,7 +37,7 @@ Cardify is a full-stack web application designed to display and manage user prof
    - Name  
    - Role  
    - Description  
-   - Profile Picture  
+   - Gender  
    - Categories  
    - Social Media Links  
 
@@ -67,4 +67,11 @@ Cardify simplifies profile management with its blend of functionality and aesthe
 ### Installation  
 
 1. *Clone the repository:*  
+    ```
+    git clone https://github.com/josephfrancis60/Cardify.git
+    ```
+    or click `Download zip` and extract it.
    
+
+## License
+The Author is not responsible for any misuse of the program. See the [MIT LICENSE](./LICENSE). 
