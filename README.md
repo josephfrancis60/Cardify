@@ -1,4 +1,6 @@
 # Cardify - Reimagine how you connect
+![Flask](https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white)![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white) ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)  ![MUI](https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white) 
+
 🚀 *Dynamic Profile Management Web Application*  
 
 Cardify is a full-stack web application designed to display and manage user profiles dynamically. Each profile is presented in an elegant, card-based layout, making profile management intuitive, organized, and visually appealing.  
